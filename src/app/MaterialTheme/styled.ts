@@ -1,3 +1,5 @@
+// bu - custimizate elementni yasash usuli 
+
 import { styled, alpha } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 

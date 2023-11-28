@@ -1,0 +1,162 @@
+.footer_config { /* <div> */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 509px;
+    background: #2c261e;
+}
+
+.footer_config .main_footer_container { /* <Container>ning ichidagi katta <Stack> */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 91px;
+    margin-left: 90px;
+    width: 1144px;
+    height: 377px;
+}
+
+.main_footer_container .main_text { /* Lorem ipsum dolor sit amet..... */
+    position: relative;
+    width: 340px;
+    height: 97.22px;
+    margin-top: 19px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 34px;
+    /* or 212% */
+
+
+    color: #E3C08D;
+}
+    .main_footer_container .contact_links { /* Contact iconlar */
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 125.28px;
+    height: 15.14px;
+    margin-top: 11.3px;
+}
+
+.main_footer_container .parts {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 118px;
+    height: 188px;
+    margin-left: 283px;
+}
+
+.parts .part_subject {
+    position: relative;
+    width: 109.98px;
+    height: 32.41px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 34px;
+
+    color: #c5c8c9;
+}
+
+.parts .targets {
+    position: relative;
+    width: 117px;
+    height: 129.63px;
+    margin-top: 19.6px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 34px;
+    color: #e3c08d;
+}
+
+.footer_config .liner {
+    position: relative;
+    width: 1064px;
+    height: 0px;
+    margin-top: 86px;
+    opacity: 0.2;
+    border: 1px solid #C5C8C9;
+}
+
+.footer_config .copyrights { /* eng pasdagi text: Copyright Papays 2022, All right reserved. */
+    position: relative;
+    width: 344px;
+    height: 32px;
+    margin-top: 15px;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 34px;
+    color: #e3c08d;
+}
+
+.footer_config .info { /* 1nchi <Box> */
+    position: relative;
+    width: 340px;
+    height: 206px;
+}
+
+.main_footer_container .find_us {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 297px;
+    height: 210.99px;
+    margin-left: 105.39px;
+}
+
+.find_us .find {
+    position: relative;
+    width: 116.87;
+    height: 32.91px;
+    margin-bottom: 13px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 34px;
+    color: #C5C8C9;
+
+}
+.find_us .details {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 295px;
+    height: 33px;
+}
+
+
+.details .detail_first {
+    position: relative;
+    width: 14px;
+    height: 32.41px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 34px;
+    color: #C5C8C9;
+}
+
+.details .detail_second {
+    position: relative;
+    width: 251px;
+    height: 32.41px;
+    margin-left: 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #E3C08D;
+}

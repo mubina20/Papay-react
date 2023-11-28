@@ -1,0 +1,113 @@
+/* uchala HEADERga tegishli CSS file */
+
+.format.home_navbar { /* NavbarHome functionidagi birinchi <div>ning classi */
+    width: 100%;
+    height: 773px;
+    display: flex;
+    background: url("/public/restaurant/header_restaurant.png");
+    background-size: cover;
+}
+
+.format_restaurant.home_navbar {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    background: url("/public/restaurant/header_restaurant_main.png");
+    background-size: cover;
+}
+
+.format_others.home_navbar {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    background: url("/public/others/others_header.png");
+    background-size: cover;
+}
+
+.home_navbar .navbar_config { /* chap tomondagi "Papays" iconi */
+    width: 1244.69px;
+    height: 46px;
+    margin-left: 26px;
+    margin-top: 55px;
+}
+
+.home_navbar .navbar_links { /* o'ng tomondagi linklar */
+    width: 752px;
+    height: 46px;
+}
+
+.home_navbar a { /* <NavLink> ya'ni o'ng tomondagi 'link'lar */
+    text-decoration: none;
+}
+
+.home_navbar .hover-line a { /* o'ng tomondagi 'link'larning textlarini rangi */
+    color: #ffffff;
+}
+
+.home_navbar .underline { /* 'link'larni pastki borderi o'chirilgan bo'lsin */
+    display: block;
+    content: "";
+    border-bottom: solid 2px #d7b686;
+}
+
+.home_navbar .hover-line:after { /* tanlangan 'link'ning pastki borderi bor bo'ptursin */
+    display: block;
+    content: "";
+    border-bottom: solid 2px #d7b686;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+.home_navbar .hover-line:hover:after { /* 'link'ga mishkani qo'ysa - pastki border paydo bo'lsin */
+    transform: scaleX(1);
+}
+
+
+.home_navbar .head_information { /* 'link'larning tagidagi qismi */
+    display: flex;
+    flex-direction: row;
+    width: 1290px;
+    height: 477px;
+}
+
+.home_navbar .define_restaurant { /* The Authentic Restaurant & Cafe */
+    position: relative;
+    width: 500px;
+    height: 143px;
+    margin-top: 40px;
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 75px;
+
+    color: #ffffff;
+}
+
+.home_navbar .timeline_service { /* 24 soat xizmatingizdamiz! */
+    position: relative;
+    width: 466px;
+    height: 28px;
+    margin-top: 30px;
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+
+    color: #D5D5D5;
+}
+
+.home_navbar .big_img { /* o'ng tomondagi yumaloq icon  */
+    position: relative;
+    width: 277px;
+    height: 277px;
+    margin-top: 41px;
+    margin-left: 494px;
+    /* background: url("/public/home/blister5.png"); */
+    border-radius: 90px 0 0 0;
+    filter: invert(46%) blur(1);
+    background-size: cover;
+}
