@@ -1,6 +1,5 @@
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Button } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-import Button from '@mui/material/Button';
 
 export function MySettings(props: any) {
 	return (
