@@ -1,23 +1,17 @@
 import React, {useState} from 'react';
-import { Box, Container, Stack } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import Button from '@mui/material/Button';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { Box, Container, Stack, Button, Tab, Pagination, PaginationItem } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+
 import { MemberPosts } from './memberPosts';
 import { MemberFollowers } from './memberFollowers';
 import { MemberFollowing } from './memberFollowing';
 import { MySettings } from './mySettings';
 
-// OTHERS
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
@@ -110,17 +104,20 @@ export function VisitMyPage(props: any) {
 									<span className={'order_user_name'}>Ismailov Akmal</span>
 									<span className={'order_user_prof'}>USER</span>
 								</Box>
+
 								<Box className={'user_media_box'}>
 									<FacebookIcon sx={{ cursor: "pointer" }} />
 									<InstagramIcon sx={{ cursor: "pointer" }} />
 									<TelegramIcon sx={{ cursor: "pointer" }} />
 									<YouTubeIcon sx={{ cursor: "pointer" }} />
 								</Box>
+
 								<Box className={'user_media_box'}>
 									<p className={'follows'}>Followers: 3</p>
 									<p className={'follows'}>Followings: 2</p>
 								</Box>
 								<p className={'user_desc'}>Qo'shimcha ma'lumot kiritilmagan</p>
+
 								<Box display={'flex'} justifyContent={'flex-end'} sx={{ mt: '10px' }}>
 									<TabList onChange={handleChange} aria-label="lab API tabs example">
 										<Tab
