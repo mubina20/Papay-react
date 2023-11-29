@@ -40,27 +40,11 @@ export function MemberFollowing(props: any) {
 								Bekor Qilish
 							</Button>
 						)}
+
+						{!props.actions_enabled && <p>HELLO</p>}
 					</Box>
 				);
 			})}
-			<Stack sx={{ my: '40px' }} direction="row" alignItems={'center'} justifyContent="center">
-				<Box className="box_bottom">
-					<Pagination
-						count={3}
-						page={1}
-						renderItem={(item) => (
-							<PaginationItem
-								components={{
-									previous: ArrowBackIcon,
-									next: ArrowForwardIcon,
-								}}
-								{...item}
-								color={'secondary'}
-							/>
-						)}
-					/>
-				</Box>
-			</Stack>
 		</Stack>
 	);
 }
