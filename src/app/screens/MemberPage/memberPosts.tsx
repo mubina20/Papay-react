@@ -2,7 +2,6 @@ import { Box, Stack, Checkbox } from "@mui/material";
 import moment from "moment";
 
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 export function MemberPosts(props: any) {
@@ -56,8 +55,8 @@ export function MemberPosts(props: any) {
                                         {moment().format("YY-MM-DD HH:mm")}
                                         <Checkbox
                                             sx={{ ml: "40px" }}
-                                            icon={<FavoriteBorder />}
-                                            checkedIcon={<Favorite style={{ color: "red" }} />}
+                                            icon={<FavoriteBorder/>}
+                                            checkedIcon={<FavoriteBorder style={{ color: "white" }}/>}
                                             checked={true}
                                         />
 

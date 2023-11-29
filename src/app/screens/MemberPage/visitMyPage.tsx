@@ -33,7 +33,7 @@ export function VisitMyPage(props: any) {
 						<Stack className={'my_page_left'}>
 							<Box display={'flex'} flexDirection={'column'}>
 								<TabPanel value={'1'}>
-									<Box className={'menu_name'}>Mening Maqolalarim</Box>
+									<Box className={'menu_name'}>My Articles</Box>
 									<Box className={'menu_content'}>
 										<MemberPosts />
 										<Stack sx={{ my: '40px' }} direction="row" alignItems="center" justifyContent="center">
@@ -72,17 +72,17 @@ export function VisitMyPage(props: any) {
 								</TabPanel>
 
 								<TabPanel value={'4'}>
-									<Box className={'menu_name'}>Maqola yozish</Box>
+									<Box className={'menu_name'}>Writing an article</Box>
 									<Box className={'write_content'}></Box>
 								</TabPanel>
 
 								<TabPanel value={'5'}>
-									<Box className={'menu_name'}>Tanlangan Maqola</Box>
+									<Box className={'menu_name'}>Featured Article</Box>
 									<Box className={'menu_content'}></Box>
 								</TabPanel>
 
 								<TabPanel value={'6'}>
-									<Box className={'menu_name'}>Ma'lumotlarni o'zgartirish</Box>
+									<Box className={'menu_name'}>Change Information</Box>
 									<Box className={'menu_content'}>
                                         <MySettings />
                                     </Box>
@@ -117,7 +117,7 @@ export function VisitMyPage(props: any) {
 									<p className={'follows'}>Followers: 3</p>
 									<p className={'follows'}>Followings: 2</p>
 								</Box>
-								<p className={'user_desc'}>Qo'shimcha ma'lumot kiritilmagan</p>
+								<p className={'user_desc'}>No additional information is included</p>
 
 								<Box display={'flex'} justifyContent={'flex-end'} sx={{ mt: '10px' }}>
 									<TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -126,7 +126,7 @@ export function VisitMyPage(props: any) {
 											value={'4'}
 											component={() => (
 												<Button variant={'contained'} onClick={() => setValue('4')}>
-													Maqola Yozish
+													Writing an article
 												</Button>
 											)}
 										/>
@@ -145,7 +145,7 @@ export function VisitMyPage(props: any) {
 										component={() => (
 											<div className={`menu_box `} onClick={() => setValue('1')}>
 												<img src={'/icons/post.svg'} alt=''/>
-												<span>Maqolalarim</span>
+												<span>My Articles</span>
 											</div>
 										)}
 									/>

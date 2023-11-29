@@ -13,8 +13,8 @@ export function MySettings(props: any) {
                     width={'100px'} height={'100px'} 
                 />
 				<div className={'media_change_box'}>
-					<span>Rasm Yuklash</span>
-					<p>JPG, JPEG, PNG rasmlarini yuklay olasiz!</p>
+					<span>Image Upload</span>
+					<p>You can upload "JPG", "JPEG", "PNG" images!</p>
 					<div className={'up_del_box'}>
 						<Button component="label" style={{ minWidth: '0' }}>
 							<CloudDownloadIcon />
@@ -25,7 +25,7 @@ export function MySettings(props: any) {
 			</Box>
 			<Box className={'input_frame'}>
 				<div className={'long_input'}>
-					<label className={'spec_label'}>Ism</label>
+					<label className={'spec_label'}>Name</label>
 					<input
 						className={'spec_input mb_nick'}
 						type="text"
@@ -36,7 +36,7 @@ export function MySettings(props: any) {
 			</Box>
 			<Box className={'input_frame'}>
 				<div className={'short_input'}>
-					<label className={'spec_label'}>Telefon Raqam</label>
+					<label className={'spec_label'}>Tel </label>
 					<input
 						className={'spec_input mb_phone'}
 						type="text"
@@ -45,28 +45,28 @@ export function MySettings(props: any) {
 					/>
 				</div>
 				<div className={'short_input'}>
-					<label className={'spec_label'}>Manzil</label>
+					<label className={'spec_label'}>Address</label>
 					<input
 						className={'spec_input  mb_address'}
 						type="text"
-						placeholder="Manzil kiritilmagan"
+						placeholder="No Address included"
 						name="mb_address"
 					/>
 				</div>
 			</Box>
 			<Box className={'input_frame'}>
 				<div className={'long_input'}>
-					<label className={'spec_label'}>Ma'lumot</label>
+					<label className={'spec_label'}>Information</label>
 					<textarea
 						className={'spec_textarea mb_description'}
-						placeholder="Mavjud emas"
+						placeholder="Not available"
 						name="mb_description"
 					/>
 				</div>
 			</Box>
 			<Box display={'flex'} justifyContent={'flex-end'} sx={{ mt: '25px' }}>
 				<Button variant={'contained'}>
-					Saqlash
+					Save
 				</Button>
 			</Box>
 		</Stack>

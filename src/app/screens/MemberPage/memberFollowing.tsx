@@ -1,6 +1,4 @@
-import { Box, Stack, Avatar, Button, Pagination, PaginationItem } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Stack, Avatar, Button } from '@mui/material';
 
 const followings = [
     { mb_nick: "Temur"},
@@ -29,7 +27,7 @@ export function MemberFollowing(props: any) {
 							<span className={'name_text'}>{following.mb_nick}</span>
 						</div>
 
-						{props.actions_enabled && (
+						{props.actions_enabled ? (
 							<Button
 								variant={'contained'}
 								startIcon={
@@ -37,11 +35,11 @@ export function MemberFollowing(props: any) {
                                 }
 								className={'follow_cancel_btn'}
 							>
-								Bekor Qilish
+								Unfollow
 							</Button>
+						) : (
+							<p>HELLO</p>
 						)}
-
-						{!props.actions_enabled && <p>HELLO</p>}
 					</Box>
 				);
 			})}

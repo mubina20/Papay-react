@@ -16,7 +16,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export function VisitOtherPage(props: any) {
   /** INITIALIZATIONS **/
-	const [value, setValue] = useState("1");
+	const [value, setValue] = useState("5");
 
 	/** HANDLERS **/
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -31,7 +31,7 @@ export function VisitOtherPage(props: any) {
                         <Stack className={"my_page_left"}>
                             <Box display={"flex"} flexDirection={"column"}>
                                 <TabPanel value={"1"}>
-                                    <Box className={"menu_name"}>Maqolalar</Box>
+                                    <Box className={"menu_name"}>Articles</Box>
                                     <Box className={"menu_content"}>
                                         <MemberPosts />
                                         <Stack
@@ -61,27 +61,22 @@ export function VisitOtherPage(props: any) {
                                 </TabPanel>
 
                                 <TabPanel value={"2"}>
-                                <Box className={"menu_name"}>Followers</Box>
-                                <Box className={"menu_content"}>
-                                    <MemberFollowers actions_enabled={false} />
-                                </Box>
+                                    <Box className={"menu_name"}>Followers</Box>
+                                    <Box className={"menu_content"}>
+                                        <MemberFollowers actions_enabled={false} />
+                                    </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"3"}>
-                                <Box className={"menu_name"}>Following</Box>
-                                <Box className={"menu_content"}>
-                                    <MemberFollowing actions_enabled={false} />
-                                </Box>
+                                    <Box className={"menu_name"}>Following</Box>
+                                    <Box className={"menu_content"}>
+                                        <MemberFollowing actions_enabled={false} />
+                                    </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"4"}>
-                                <Box className={"menu_name"}>Maqola yozish</Box>
-                                <Box className={"write_content"}></Box>
-                                </TabPanel>
-
-                                <TabPanel value={"5"}>
-                                <Box className={"menu_name"}>Tanlangan Maqola</Box>
-                                <Box className={"menu_content"}></Box>
+                                    <Box className={"menu_name"}>Featured Article</Box>
+                                    <Box className={"menu_content"}></Box>
                                 </TabPanel>
                             </Box>
                         </Stack>
@@ -112,7 +107,7 @@ export function VisitOtherPage(props: any) {
                                     <p className={"follows"}>Followers: 3</p>
                                     <p className={"follows"}>Followings: 2</p>
                                 </Box>
-                                <p className={"user_desc"}>"Qo'shimcha ma'lumot kiritilmagan"</p>
+                                <p className={"user_desc"}>No additional information is included</p>
 
                                 <Box
                                     display={"flex"}
@@ -132,7 +127,7 @@ export function VisitOtherPage(props: any) {
                                                     variant={"contained"}
                                                     style={{ backgroundColor: "#f70909b8" }}
                                                 >
-                                                    BEKOR QILISH
+                                                    Unfollow
                                                 </Button>
                                                 )}
                                             />
@@ -145,7 +140,7 @@ export function VisitOtherPage(props: any) {
                                                     variant={"contained"}
                                                     style={{ backgroundColor: "#30945e" }}
                                                 >
-                                                    FOLLOW QILISH
+                                                    Follow
                                                 </Button>
                                                 )}
                                             />
@@ -168,7 +163,7 @@ export function VisitOtherPage(props: any) {
                                             onClick={() => setValue("1")}
                                         >
                                             <img src={"/icons/post.svg"} alt="" />
-                                            <span>Maqolalari</span>
+                                            <span>Articles</span>
                                         </div>
                                         )}
                                     />
