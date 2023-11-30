@@ -15,6 +15,8 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { TuiEditor } from '../../components/tuiEditor/TuiEditor';
+import TViewer from '../../components/tuiEditor/TViewer';
 
 export function VisitMyPage(props: any) {
 	/** INITIALIZATIONS **/
@@ -73,12 +75,16 @@ export function VisitMyPage(props: any) {
 
 								<TabPanel value={'4'}>
 									<Box className={'menu_name'}>Writing an article</Box>
-									<Box className={'write_content'}></Box>
+									<Box className={'write_content'}>
+										<TuiEditor />
+									</Box>
 								</TabPanel>
 
 								<TabPanel value={'5'}>
 									<Box className={'menu_name'}>Featured Article</Box>
-									<Box className={'menu_content'}></Box>
+									<Box className={'menu_content'}>
+										<TViewer text={`<h3>HELLO</h3.`}/>
+									</Box>
 								</TabPanel>
 
 								<TabPanel value={'6'}>

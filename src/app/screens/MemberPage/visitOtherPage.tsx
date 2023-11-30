@@ -5,6 +5,7 @@ import { TabList, TabContext, TabPanel } from "@mui/lab";
 import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
+import TViewer from '../../components/tuiEditor/TViewer';
 
 // MUI ICONS
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -16,7 +17,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export function VisitOtherPage(props: any) {
   /** INITIALIZATIONS **/
-	const [value, setValue] = useState("5");
+	const [value, setValue] = useState("1");
 
 	/** HANDLERS **/
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -76,7 +77,9 @@ export function VisitOtherPage(props: any) {
 
                                 <TabPanel value={"4"}>
                                     <Box className={"menu_name"}>Featured Article</Box>
-                                    <Box className={"menu_content"}></Box>
+                                    <Box className={"menu_content"}>
+                                        <TViewer text={`<h3>HELLO</h3.`}/>
+                                    </Box>
                                 </TabPanel>
                             </Box>
                         </Stack>
