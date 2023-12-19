@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Box,
     Container,
@@ -12,6 +12,11 @@ import {
 export function NavbarHome(props: any) {
     /** INITIALIZATIONS **/
     const [count, setCount] = useState(0);
+    const [value, setValue] = useState(true);
+
+    useEffect(() => {
+        setCount(count + 1);
+    }, [value]); // array[] qilmasak - loop ishlaydi, ya'ni bir hil ma'lumotlarni qayta qayta so'raydi
 
     // HANDLERS
     // const countHandler = () => {
@@ -108,7 +113,7 @@ export function NavbarHome(props: any) {
                                     background: "#1976d2",
                                     color: "#ffffff",
                                 }}
-                                onClick={() => setCount(count + 1)}
+                                onClick={() => setValue(!value)}
                             >
                                 Sign up
                             </Button>
