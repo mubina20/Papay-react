@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import {
     Box,
     Container,
@@ -6,9 +8,16 @@ import {
     IconButton,
     Badge
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
 
 export function NavbarHome(props: any) {
+    /** INITIALIZATIONS **/
+    const [count, setCount] = useState(0);
+
+    // HANDLERS
+    // const countHandler = () => {
+    //     setCount(count + 1);
+    // }
+
     return (
         <div className="format home_navbar">
             <Container>
@@ -89,7 +98,7 @@ export function NavbarHome(props: any) {
                         <Box className="define_restaurant">
                             Amazing restaurants in Korea
                         </Box>
-                        <Box className="timeline_service">24 hour service</Box>
+                        <Box className="timeline_service">{count} hour service</Box>
                         <Box sx={{ mt: "90px" }}>
                             <Button
                                 variant="contained"
@@ -99,6 +108,7 @@ export function NavbarHome(props: any) {
                                     background: "#1976d2",
                                     color: "#ffffff",
                                 }}
+                                onClick={() => setCount(count + 1)}
                             >
                                 Sign up
                             </Button>
