@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { RestaurantPage } from './screens/RestaurantPage';
 import { CommunityPage } from './screens/CommunityPage';
@@ -28,7 +27,7 @@ function App() {
   return (
     <Router>
 
-      {main_path == '/' ? (
+      {main_path === '/' ? (
         <NavbarHome setPath={setPath} />
       ) : main_path.includes("/restaurant") ? (
         <NavbarRestaurant setPath={setPath} />
@@ -56,10 +55,9 @@ function App() {
           <LoginPage />
         </Route>
         <Route path="/">
-            <HomePage />
+          <HomePage />
         </Route>
       </Switch>
-
       <Footer />
     </Router>
   );
