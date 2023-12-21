@@ -11,12 +11,12 @@ import {
 
 export function NavbarHome(props: any) {
     /** INITIALIZATIONS **/
-    const [count, setCount] = useState(0);
-    const [value, setValue] = useState(true);
+    // const [count, setCount] = useState(0);
+    // const [value, setValue] = useState(true);
 
-    useEffect(() => {
-        setCount(count + 1);
-    }, [value]); // array[] qilmasak - loop ishlaydi, ya'ni bir hil ma'lumotlarni qayta qayta so'raydi
+    // useEffect(() => {
+    //     setCount(count + 1);
+    // }, [value]); // array[] qilmasak - loop ishlaydi, ya'ni bir hil ma'lumotlarni qayta qayta so'raydi
 
     // HANDLERS
     // const countHandler = () => {
@@ -103,7 +103,7 @@ export function NavbarHome(props: any) {
                         <Box className="define_restaurant">
                             Amazing restaurants in Korea
                         </Box>
-                        <Box className="timeline_service">{count} hour service</Box>
+                        <Box className="timeline_service">24 hour service</Box>
                         <Box sx={{ mt: "90px" }}>
                             <Button
                                 variant="contained"
@@ -113,7 +113,6 @@ export function NavbarHome(props: any) {
                                     background: "#1976d2",
                                     color: "#ffffff",
                                 }}
-                                onClick={() => setValue(!value)}
                             >
                                 Sign up
                             </Button>

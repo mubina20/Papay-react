@@ -18,7 +18,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const order_list = Array.from(Array(8).keys());
-console.log(order_list);
 
 export function AllRestaurants() {
     return (

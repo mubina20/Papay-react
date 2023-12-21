@@ -7,7 +7,7 @@ const initialState: HomePageState = {
     trendProducts: [],
     bestBoArticles: [],
     trendBoArticles: [],
-    newsBoArticles: []
+    newsBoArticles: [],
 };
 
 const HomePageSlice = createSlice({
@@ -17,31 +17,31 @@ const HomePageSlice = createSlice({
         setTopRestaurants: (state, action) => {
             state.topRestaurants = action.payload;
         },
-        setBestRestaurants: (state, action) => {
+        bestRestaurants: (state, action) => {
             state.bestRestaurants = action.payload;
         },
-        setTrendProducts: (state, action) => {
+        trendProducts: (state, action) => {
             state.trendProducts = action.payload;
         },
-        setBestBoArticles: (state, action) => {
+        bestBoArticles: (state, action) => {
             state.bestBoArticles = action.payload;
         },
-        setTrendBoArticles: (state, action) => {
+        trendBoArticles: (state, action) => {
             state.trendBoArticles = action.payload;
         },
-        setNewsBoArticles: (state, action) => {
+        newsBoArticles: (state, action) => {
             state.newsBoArticles = action.payload;
         }
     }
-});
+    });
 
-export const {
+    export const {
     setTopRestaurants,
-    setBestRestaurants,
-    setTrendProducts,
-    setBestBoArticles,
-    setTrendBoArticles,
-    setNewsBoArticles
+    bestRestaurants,
+    trendProducts,
+    bestBoArticles,
+    trendBoArticles,
+    newsBoArticles,
 } = HomePageSlice.actions;
 
 const HomePageReducer = HomePageSlice.reducer;
