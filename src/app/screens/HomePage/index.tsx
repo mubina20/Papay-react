@@ -10,12 +10,12 @@ import '../../../css/home.css';
 
 export function HomePage() {
 
+	// Selector: store => data
+	
 	useEffect(() => {
-		console.log('ComponentDidMount => Data fetch');
+		// BackEnd Data request => data
 
-		return () => { // return ham arrow function qaytaradi
-			console.log('ComponentWillUnmount process');
-		}
+		// Slice: data => STORE
 
 	}, []);
 
