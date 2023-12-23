@@ -18,11 +18,12 @@ class RestaurantApiService {
                 result = await axios.get(this.path + url, { withCredentials: true });
             assert.ok(result, Definer.general_err1);
 
-            console.log("RESULT ::", result);
-            console.log("STATE ::", result.data.state);
+            // console.log("getTopRestaurants RESULT ::", result);
+            // console.log("getTopRestaurants STATE ::", result.data.state);
 
             const top_restaurants: Restaurant[] = result.data.data;
-            console.log("TOP Restaurants::", top_restaurants);
+            // console.log("TOP Restaurants::", top_restaurants);
+
             return top_restaurants;
         } catch (err: any) {
             console.log(`ERROR :: getTopRestaurants", ${err.message}`);
@@ -35,12 +36,13 @@ class RestaurantApiService {
             const url = `/restaurants?order=${data.order}&page=${data.page}&limit=${data.limit}`,
                 result = await axios.get(this.path + url, { withCredentials: true });
             assert.ok(result, Definer.general_err1);
-            console.log("RESULT ::", result);
-        
-            console.log("STATE ::", result.data.state);
+
+            // console.log("getRestaurants RESULT ::", result);
+            // console.log("getRestaurants STATE ::", result.data.state);
 
             const restaurants: Restaurant[] = result.data.data;
-            console.log("ALL Restaurants::", restaurants);
+            // console.log("ALL Restaurants::", restaurants);
+
             return restaurants;
         } catch (err: any) {
             console.log(`ERROR :: getRestaurants", ${err.message}`);

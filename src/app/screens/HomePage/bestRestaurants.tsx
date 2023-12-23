@@ -127,10 +127,10 @@ export function BestRestaurants() {
                                                         sx={{ 
                                                             fontSize: 20, 
                                                             marginLeft: "5px",
-                                                            // fill:
-                                                            // ele?.me_liked && ele?.me_liked[0]?.my_favorite
-                                                            //     ? "red"
-                                                            //     : "white"
+                                                            fill:
+                                                            ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                                                ? "red"
+                                                                : "white"
                                                         }} 
                                                     />
                                                 </Typography>

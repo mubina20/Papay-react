@@ -14,7 +14,7 @@ import { serverApi } from "../../../lib/config";
 const topRestaurantsRetriever = createSelector(
   retrieveTopRestaurants,
   (topRestaurants) => ({
-    topRestaurants,
+    topRestaurants
   })
 );
 
