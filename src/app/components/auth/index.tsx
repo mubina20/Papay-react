@@ -5,6 +5,10 @@ import Fade from "@material-ui/core/Fade";
 import { Fab, Stack, TextField } from "@mui/material";
 import styled from "styled-components";
 import LoginIcon from "@mui/icons-material/Login";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiServise";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -29,10 +33,47 @@ const ModalImg = styled.img`
     margin-left: 10px;
 `;
 
-    export default function AuthenticationModal(props: any) {
+export default function AuthenticationModal(props: any) {
+    // INITIALIZATIONS 
     const classes = useStyles();
-    const signUpOpen = false;
-    const loginOpen = false;
+    let mb_nick: string = "",
+        mb_phone: number = 0,
+        mb_password: string = "";
+    
+    // HANDLERS 
+    const handleUsername = (e: any) => {
+        mb_nick = e.target.value;
+    };
+
+    const handlePhone = (e: any) => {
+        mb_phone = e.target.value;
+    };
+
+    const handlePassword = (e: any) => {
+        mb_password = e.target.value;
+    };
+
+    const handleLoginRequest = async () => {
+        try {
+            const is_fulfilled = mb_nick != "" && mb_password != "";
+            assert.ok(is_fulfilled, Definer.input_err1);
+
+            const login_data = {
+                mb_nick: mb_nick,
+                mb_password: mb_password,
+            };
+
+            const memberApiService = new MemberApiService();
+            await memberApiService.loginRequest(login_data);
+
+            props.handleLoginClose();
+            window.location.reload();
+        } catch (err: any) {
+            console.log(err);
+            props.handleLoginClose();
+            sweetErrorHandling(err).then();
+        }
+    };
 
     return (
         <div>
@@ -41,15 +82,15 @@ const ModalImg = styled.img`
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
-            open={signUpOpen}
-            // onClose={}
+            open={props.signUpOpen}
+            onClose={props.handleSignUpClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
             timeout: 500,
             }}
         >
-            <Fade in={signUpOpen}>
+            <Fade in={props.signUpOpen}>
                 <Stack
                     className={classes.paper}
                     direction={"row"}
@@ -97,15 +138,15 @@ const ModalImg = styled.img`
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
-            open={loginOpen}
-            // onClose={}
+            open={props.loginOpen}
+            onClose={props.handleLoginClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
             timeout: 500,
             }}
         >
-            <Fade in={loginOpen}>
+            <Fade in={props.loginOpen}>
                 <Stack
                     className={classes.paper}
                     direction={"row"}
@@ -121,20 +162,20 @@ const ModalImg = styled.img`
                     >
                         <h2>Login Form</h2>
                         <TextField
-                            // onChange={}
+                            onChange={handleUsername}
                             id="outlined-basic"
                             label="username"
                             variant="outlined"
                             sx={{ my: "10px" }}
                         />
                         <TextField
-                            // onChange={}
+                            onChange={handlePassword}
                             id="outlined-basic"
                             label="password"
                             variant="outlined"
                         />
                         <Fab
-                            // onClick={}
+                            onClick={handleLoginRequest}
                             sx={{ marginTop: "27px", width: "120px" }}
                             variant="extended"
                             color="primary"

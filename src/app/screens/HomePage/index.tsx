@@ -22,7 +22,7 @@ const actionDispatch = (dispatch: Dispatch) => ({
 });
 
 export function HomePage() {
-	// INITIALIZATION
+	// INITIALIZATIONS
 	const { setTopRestaurants, setBestRestaurants } = actionDispatch(useDispatch());
 
 	useEffect(() => {

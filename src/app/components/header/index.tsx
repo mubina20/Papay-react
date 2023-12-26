@@ -8,6 +8,7 @@ import {
     IconButton,
     Badge
 } from "@mui/material";
+import { sweetTopSuccessAlert } from "../../../lib/sweetAlert";
 
 export function NavbarHome(props: any) {
     /** INITIALIZATIONS **/
@@ -85,6 +86,7 @@ export function NavbarHome(props: any) {
                             <Button
                             variant="contained"
                             style={{ color: "#FFFFFF", background: "#1976d2" }}
+                            onClick={props.handleLoginOpen}
                             >
                                 Login
                             </Button>
@@ -113,6 +115,7 @@ export function NavbarHome(props: any) {
                                     background: "#1976d2",
                                     color: "#ffffff",
                                 }}
+                                onClick={props.handleSignUpOpen}
                             >
                                 Sign up
                             </Button>
