@@ -12,7 +12,7 @@ class ProductApiService {
         this.path = serverApi;
     }
 
-    async getTargetProducts(data: ProductSearchObj) {
+    async getTargetProducts(data: ProductSearchObj): Promise<Product[]> {
         try {
             const url = "/products";
             const result = await axios.post(this.path + url, data, {
