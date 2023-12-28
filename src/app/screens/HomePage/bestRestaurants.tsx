@@ -62,7 +62,14 @@ export function BestRestaurants() {
                                                     color: "rgba(0,0,0,.4)",
                                                 }}
                                             >
-                                                <Favorite style={{ color: "white"}}/>
+                                                <Favorite 
+                                                    style={{ 
+                                                        fill:
+                                                        ele?.me_liked && ele?.me_liked[0]?.my_favorite
+                                                            ? "red"
+                                                            : "white"
+                                                    }} 
+                                                />
                                             </IconButton>
                                         </CardOverflow>
                                         <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
@@ -123,16 +130,7 @@ export function BestRestaurants() {
                                                     }}
                                                 >
                                                     <div>{ele.mb_likes}</div>
-                                                    <Favorite 
-                                                        sx={{ 
-                                                            fontSize: 20, 
-                                                            marginLeft: "5px",
-                                                            fill:
-                                                            ele?.me_liked && ele?.me_liked[0]?.my_favorite
-                                                                ? "red"
-                                                                : "white"
-                                                        }} 
-                                                    />
+                                                    <Favorite sx={{ fontSize: 20, marginLeft: "5px"}} />
                                                 </Typography>
                                             </Stack>
                                         </CardOverflow>

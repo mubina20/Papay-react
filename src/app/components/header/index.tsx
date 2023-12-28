@@ -74,7 +74,7 @@ export function NavbarHome(props: any) {
                             style={{ color: "#FFFFFF", background: "#1976d2" }}
                             onClick={props.handleLoginOpen}
                             >
-                            LOGIN
+                                LOGIN
                             </Button>
                         </Box>
                         ) : (
