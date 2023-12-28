@@ -11,10 +11,137 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Badge from '@mui/material/Badge';
 
-const restaurant_list = Array.from(Array(10).keys());
-const product_list = Array.from(Array(8).keys());
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { createSelector } from 'reselect';
+import {
+	retrieveChosenRestaurants,
+	retrieveRandomRestaurants,
+	retrieveTargetProducts,
+} from '../RestaurantPage/selector';
+import { Restaurant } from '../../../types/user';
+import { Dispatch } from '@reduxjs/toolkit';
+import { setChosenRestaurant, setRandomRestaurants, setTargetProducts } from './slice';
+import { Product } from '../../../types/product';
+import { useHistory, useParams } from 'react-router-dom';
+import { ProductSearchObj } from '../../../types/others';
+import ProductApiService from '../../apiServices/productApiService';
+import RestaurantApiService from '../../apiServices/restaurantApiServise';
+import assert from 'assert';
+import { Definer } from '../../../lib/Definer';
+import MemberApiService from '../../apiServices/memberApiServise';
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../lib/sweetAlert';
+import { verifiedMemberData } from '../../apiServices/verify';
+import { useEffect, useRef, useState } from 'react';
+import { serverApi } from '../../../lib/config';
+
+// REDUX SLICE
+const actionDispatch = (dispatch: Dispatch) => ({
+	setRandomRestaurants: (data: Restaurant[]) => dispatch(setRandomRestaurants(data)),
+	setChosenRestaurant: (data: Restaurant) => dispatch(setChosenRestaurant(data)),
+	setTargetProducts: (data: Product[]) => dispatch(setTargetProducts(data)),
+});
+
+// REDUX SELECTOR 
+const randomRestaurantsRetriever = createSelector(
+    retrieveRandomRestaurants, 
+    (randomRestaurants) => ({
+	    randomRestaurants
+    })
+);
+
+const chosenRestaurantsRetriever = createSelector(
+    retrieveChosenRestaurants, 
+    (chosenRestaurant) => ({
+        chosenRestaurant,
+    })
+);
+
+const targetProductsRetriever = createSelector(
+    retrieveTargetProducts, 
+    (targetProducts) => ({
+        targetProducts,
+    })
+);
 
 export function OneRestaurant() {
+    // INITIALIZATIONS 
+	const history = useHistory();
+	const refs: any = useRef([]);
+	let { restaurant_id } = useParams<{ restaurant_id: string }>();
+
+	const { 
+        setRandomRestaurants, 
+        setChosenRestaurant, 
+        setTargetProducts 
+    } = actionDispatch(useDispatch());
+
+	const { randomRestaurants } = useSelector(randomRestaurantsRetriever);
+	const { chosenRestaurant } = useSelector(chosenRestaurantsRetriever);
+	const { targetProducts } = useSelector(targetProductsRetriever);
+
+	const [chosenRestaurantId, setchosenRestaurantId] = useState<string>(restaurant_id);
+    const [productRebuild, setProductRebuild] = useState<Date>(new Date());
+	const [targetProductSearchObj, setTargetProductSearchObj] = useState<ProductSearchObj>({
+		page: 1,
+		limit: 8,
+		order: 'createdAt',
+		restaurant_mb_id: restaurant_id,
+		product_collection: 'dish',
+	});
+
+	useEffect(() => {
+
+		const productService = new ProductApiService();
+		productService
+			.getTargetProducts(targetProductSearchObj)
+			.then((data) => setTargetProducts(data))
+			.catch((err) => console.log(err));
+	}, [chosenRestaurantId, targetProductSearchObj, productRebuild]);
+
+	// HANDLERS 
+	const chosenRestaurantHandler = (id: string) => {
+		setchosenRestaurantId(id);
+		targetProductSearchObj.restaurant_mb_id = id;
+		setTargetProductSearchObj({ ...targetProductSearchObj });
+		history.push(`/restaurant/${id}`);
+	};
+
+	const searchCollectionHandler = (collection: string) => {
+		targetProductSearchObj.page = 1;
+		targetProductSearchObj.product_collection = collection;
+		setTargetProductSearchObj({ ...targetProductSearchObj });
+	};
+
+	const searchOrderHandler = (order: string) => {
+		targetProductSearchObj.page = 1;
+		targetProductSearchObj.order = order;
+		setTargetProductSearchObj({ ...targetProductSearchObj });
+	};
+
+	const chosenDishHandler = (id: string) => {
+		history.push(`/restaurant/dish/${id}`);
+	};
+
+	const targetLikeProduct = async (e: any) => {
+		try {
+			assert.ok(verifiedMemberData, Definer.auth_err1);
+
+			const memberService = new MemberApiService(),
+				like_result = await memberService.memberLikeTarget({
+					like_ref_id: e.target.id,
+					group_type: 'product',
+				});
+			assert.ok(like_result, Definer.general_err1);
+
+			await sweetTopSmallSuccessAlert('success', 700, false);
+			setProductRebuild(new Date());
+		} catch (error: any) {
+			console.log('targetLikeProduct, ERROR:::', error);
+			sweetErrorHandling(error).then();
+		}
+	};
+
     return (
         <div className={'single_restaurant'}>
             <Container>
@@ -52,7 +179,7 @@ export function OneRestaurant() {
                                 prevEl: ".restaurant-prev",
                             }}
                         >
-                            {restaurant_list.map((ele, order) => {
+                            {/* {restaurant_list.map((ele, order) => {
                                 return (
                                     <SwiperSlide
                                         style={{ cursor: 'pointer' }}
@@ -63,7 +190,7 @@ export function OneRestaurant() {
                                         <span>Burak</span>
                                     </SwiperSlide>
                                 );
-                            })}
+                            })} */}
 
                         </Swiper>
                         <Box className={'next_btn restaurant-next'} style={{ color: 'white' }}>
@@ -110,27 +237,35 @@ export function OneRestaurant() {
                         </Stack>
 
                         <Stack className={'dish_wrapper'}>
-                            {product_list.map((ele, index) => {
-                                const size_volume = "normal size";
+                            {targetProducts.map((product: Product) => {
+                                const image_path = `${serverApi}/${product?.product_images[0]}`.replaceAll('\\','/');
+                                const size_volume =
+                                    product?.product_collection === "drink"
+                                        ? product?.product_volume + "l"
+                                        : product?.product_size + " size";
 
                                 return (
-                                    <Box className={"dish_box"} key={`${index}`}>
+                                    <Box className={"dish_box"} key={`${product._id}`}>
                                         <Box
                                             className={'dish_img'}
                                             sx={{
-                                                backgroundImage: `url("/others/pide.jpg")`,
+                                                backgroundImage: `url(${image_path})`,
                                             }}
                                         >
                                             <div className={'dish_sale'}> {size_volume} </div>
 
                                             <Button className={'like_view_btn'} style={{ left: '36px' }}>
-                                                <Badge badgeContent={8} color="primary">
+                                                <Badge badgeContent={product.product_likes} color="primary">
                                                     <Checkbox
                                                         icon={<FavoriteBorder style={{ color: 'white' }} />}
-                                                        id={`${index}`}
+                                                        id={product._id}
                                                         checkedIcon={<Favorite style={{ color: 'red' }} />}
+                                                        onClick={targetLikeProduct}
                                                         checked={
-                                                            true
+                                                            product?.me_liked &&
+                                                            product?.me_liked[0]?.my_favorite
+                                                                ? true
+                                                                : false
                                                         }
                                                     />
                                                 </Badge>
@@ -144,7 +279,7 @@ export function OneRestaurant() {
                                             className="like_view_btn"
                                             style={{ display: "flex" }}>
                                             <Badge
-                                                badgeContent={8}
+                                                badgeContent={product.product_views}
                                                 color="primary">
                                                 <Checkbox
                                                 icon={<RemoveRedEyeIcon style={{ color: "white" }} />}
@@ -153,10 +288,9 @@ export function OneRestaurant() {
                                             </Button>
                                         </Box>
                                         <Box className={'dish_desc'}>
-                                            <span className={'dish_title_text'}>Pida</span>
+                                            <span className={'dish_title_text'}>{product.product_name}</span>
                                             <div className={'dish_desc_text'}>
-                                                <MonetizationOnIcon />
-                                                    {10}
+                                                <MonetizationOnIcon />{product.product_price}
                                             </div>
                                         </Box>
                                     </Box>
