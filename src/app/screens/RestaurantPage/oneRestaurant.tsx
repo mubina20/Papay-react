@@ -27,11 +27,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ProductSearchObj } from '../../../types/others';
 import ProductApiService from '../../apiServices/productApiService';
 import RestaurantApiService from '../../apiServices/restaurantApiServise';
-import assert from 'assert';
-import { Definer } from '../../../lib/Definer';
-import MemberApiService from '../../apiServices/memberApiServise';
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../../lib/sweetAlert';
-import { verifiedMemberData } from '../../apiServices/verify';
 import { useEffect, useRef, useState } from 'react';
 import { serverApi } from '../../../lib/config';
 
@@ -91,13 +86,18 @@ export function OneRestaurant() {
 	});
 
 	useEffect(() => {
+        const restaurantService = new RestaurantApiService();
+		restaurantService
+			.getRestaurants({ page: 1, limit: 10, order: 'random' })
+			.then((data) => setRandomRestaurants(data))
+			.catch((err) => console.log(err));
 
 		const productService = new ProductApiService();
 		productService
 			.getTargetProducts(targetProductSearchObj)
 			.then((data) => setTargetProducts(data))
 			.catch((err) => console.log(err));
-	}, [chosenRestaurantId, targetProductSearchObj, productRebuild]);
+	}, [targetProductSearchObj, productRebuild]);
 
 	// HANDLERS 
 	const chosenRestaurantHandler = (id: string) => {
@@ -107,40 +107,6 @@ export function OneRestaurant() {
 		history.push(`/restaurant/${id}`);
 	};
 
-	const searchCollectionHandler = (collection: string) => {
-		targetProductSearchObj.page = 1;
-		targetProductSearchObj.product_collection = collection;
-		setTargetProductSearchObj({ ...targetProductSearchObj });
-	};
-
-	const searchOrderHandler = (order: string) => {
-		targetProductSearchObj.page = 1;
-		targetProductSearchObj.order = order;
-		setTargetProductSearchObj({ ...targetProductSearchObj });
-	};
-
-	const chosenDishHandler = (id: string) => {
-		history.push(`/restaurant/dish/${id}`);
-	};
-
-	const targetLikeProduct = async (e: any) => {
-		try {
-			assert.ok(verifiedMemberData, Definer.auth_err1);
-
-			const memberService = new MemberApiService(),
-				like_result = await memberService.memberLikeTarget({
-					like_ref_id: e.target.id,
-					group_type: 'product',
-				});
-			assert.ok(like_result, Definer.general_err1);
-
-			await sweetTopSmallSuccessAlert('success', 700, false);
-			setProductRebuild(new Date());
-		} catch (error: any) {
-			console.log('targetLikeProduct, ERROR:::', error);
-			sweetErrorHandling(error).then();
-		}
-	};
 
     return (
         <div className={'single_restaurant'}>
@@ -179,18 +145,20 @@ export function OneRestaurant() {
                                 prevEl: ".restaurant-prev",
                             }}
                         >
-                            {/* {restaurant_list.map((ele, order) => {
+                            {randomRestaurants.map((restaurant: Restaurant) => {
+                                const image_path = `${serverApi}/${restaurant?.mb_image}`.replaceAll('\\','/');
                                 return (
                                     <SwiperSlide
+                                    onClick={() => chosenRestaurantHandler(restaurant._id)}
                                         style={{ cursor: 'pointer' }}
-                                        key={order}
+                                        key={restaurant._id}
                                         className="restaurant_avatars"
                                     >
-                                        <img src={"/restaurant/burak.jpeg"} alt='' />
-                                        <span>Burak</span>
+                                        <img src={image_path} alt='' />
+                                        <span>{restaurant.mb_nick}</span>
                                     </SwiperSlide>
                                 );
-                            })} */}
+                            })}
 
                         </Swiper>
                         <Box className={'next_btn restaurant-next'} style={{ color: 'white' }}>
@@ -260,7 +228,6 @@ export function OneRestaurant() {
                                                         icon={<FavoriteBorder style={{ color: 'white' }} />}
                                                         id={product._id}
                                                         checkedIcon={<Favorite style={{ color: 'red' }} />}
-                                                        onClick={targetLikeProduct}
                                                         checked={
                                                             product?.me_liked &&
                                                             product?.me_liked[0]?.my_favorite
