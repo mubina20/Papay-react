@@ -133,6 +133,7 @@ export function TopRestaurants() {
                           transform: "translateY(50%)",
                           color: "rgba(0, 0, 0, 0.4)"
                         }}
+                        onClick={(e) => {e.stopPropagation()}}
                       >
                         <Favorite 
                           onClick={(e) => targetLikeTop(e, ele._id)}

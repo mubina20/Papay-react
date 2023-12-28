@@ -10,6 +10,12 @@ import { createSelector } from "reselect";
 import { retrieveBestRestaurants } from "./selector";
 import { Restaurant } from "../../../types/user";
 import { serverApi } from "../../../lib/config";
+import { useHistory } from "react-router-dom";
+import { useRef } from "react";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiServise";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 
 // REDUX SELECTOR 
 const bestRestaurantsRetriever = createSelector(
@@ -24,6 +30,41 @@ export function BestRestaurants() {
     const { bestRestaurants } = useSelector(bestRestaurantsRetriever);
     console.log("bestRestaurants:::", bestRestaurants);
 
+    const history = useHistory();
+    const refs: any = useRef([]);
+
+
+    // HANDLERS
+    const chosenRestaurantHandler = (id: string) =>
+    history.push(`/restaurant/${id}`);
+    const goRestaurantsHandler = () => history.push("/restaurant");
+
+    const targetLikeBest = async (e: any, id: string) => {
+        try {
+            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+            const memberService = new MemberApiService(),
+                like_result = await memberService.memberLikeTarget({
+                like_ref_id: id,
+                group_type: "member",
+                });
+            assert.ok(like_result, Definer.general_err1);
+
+            if (like_result.like_status > 0) {
+                e.target.style.fill = "red";
+                refs.current[like_result.like_ref_id].innerHTML++;
+            } else {
+                e.target.style.fill = "white";
+                refs.current[like_result.like_ref_id].innerHTML--;
+            }
+
+            await sweetTopSmallSuccessAlert("success", 700, false);
+        } catch (err: any) {
+            console.log(`ERROR :: targetLikeBest, ${err}`);
+            sweetErrorHandling(err).then();
+        }
+    };
+
     return (
         <div className="best_restaurant_frame">
             <img src={"icons/line_group.svg"} alt="" style={{ position: "absolute", left: "6%", transform: "rotate(90deg)" }} />
@@ -36,11 +77,13 @@ export function BestRestaurants() {
                             return (
                                 <CssVarsProvider key={ele._id}>
                                     <Card
+                                        onClick={() => chosenRestaurantHandler(ele._id)}
                                         variant="outlined"
                                         sx={{
                                             minHeight: 483,
                                             minWidth: 320,
-                                            mr: "35px"
+                                            mr: "35px",
+                                            cursor: "pointer"
                                         }}
                                     >
                                         <CardOverflow>
@@ -61,8 +104,10 @@ export function BestRestaurants() {
                                                     transform: "translateY(50%)",
                                                     color: "rgba(0,0,0,.4)",
                                                 }}
+                                                onClick={(e) => {e.stopPropagation()}}
                                             >
                                                 <Favorite 
+                                                    onClick={(e) => targetLikeBest(e, ele._id)}
                                                     style={{ 
                                                         fill:
                                                         ele?.me_liked && ele?.me_liked[0]?.my_favorite
@@ -129,7 +174,9 @@ export function BestRestaurants() {
                                                         display: "flex",
                                                     }}
                                                 >
-                                                    <div>{ele.mb_likes}</div>
+                                                    <div ref={(element) => (refs.current[ele._id] = element)}>
+                                                        {ele.mb_likes}
+                                                    </div>
                                                     <Favorite sx={{ fontSize: 20, marginLeft: "5px"}} />
                                                 </Typography>
                                             </Stack>
@@ -148,7 +195,7 @@ export function BestRestaurants() {
                         <Button style={{ background: "#1976d2", color: "#FFFFFF" }} >
                             see all
                         </Button>
-                </Stack>
+                    </Stack>
 
                 </Stack>
             </Container>
