@@ -95,12 +95,17 @@ export function OneRestaurant() {
 			.then((data) => setRandomRestaurants(data))
 			.catch((err) => console.log(err));
 
+        restaurantService
+			.getChosenRestaurant(chosenRestaurantId)
+			.then((data) => setChosenRestaurant(data))
+			.catch((err) => console.log(err));
+
 		const productService = new ProductApiService();
 		productService
 			.getTargetProducts(targetProductSearchObj)
 			.then((data) => setTargetProducts(data))
 			.catch((err) => console.log(err));
-	}, [targetProductSearchObj, productRebuild]);
+	}, [chosenRestaurantId, targetProductSearchObj, productRebuild]);
 
 
 	// HANDLERS 
@@ -393,11 +398,11 @@ export function OneRestaurant() {
                 <Box
                     className="about_left"
                     sx={{
-                        backgroundImage: `url(/restaurant/burak.jpeg)`.replaceAll('\\','/'),
+                        backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image})`.replaceAll('\\','/'),
                     }}>
                     <div className="about_left_desc">
-                    <span>Burak</span>
-                    <p>The most delicious restaurant</p>
+                        <span>{chosenRestaurant?.mb_nick}</span>
+                        <p>{chosenRestaurant?.mb_description}</p>
                     </div>
                 </Box>
                 <Box className="about_right">
