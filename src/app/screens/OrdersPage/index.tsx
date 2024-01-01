@@ -1,20 +1,41 @@
 import { Box, Stack, Container, Tabs } from '@mui/material';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
-
-import PausedOrders from '../../components/orders/pausedOrders';
-import ProcessOrders from '../../components/orders/processOrders';
-import FinishedOrders from '../../components/orders/finishedOrders';
 import Marginer from '../../components/marginer';
 
 import '../../../css/order.css';
 import { LocationOn } from '@mui/icons-material';
 
+import PausedOrders from '../../components/orders/pausedOrders';
+import ProcessOrders from '../../components/orders/processOrders';
+import FinishedOrders from '../../components/orders/finishedOrders';
+
+// REDUX
+import { Dispatch } from '@reduxjs/toolkit';
+import { Order } from '../../../types/order';
+import { setFinishedOrders, setPausedOrders, setProcessOrders } from '../../screens/OrdersPage/slice';
+import { useDispatch } from 'react-redux';
+
+// REDUX SLICE 
+const actionDispatch = (dispatch: Dispatch) => ({
+	setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+	setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+	setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
+
+
+
+
 
 export function OrdersPage() {
 	// INITIALIZATIONS
 	const [value, setValue] = useState('1');
+	const { setPausedOrders, setProcessOrders, setFinishedOrders } = actionDispatch(useDispatch());
+
+
+	useEffect(() => {
+	}, []);
 
 	//HANDLERS
 	const handleChange = (event: any, newValue: string) => {

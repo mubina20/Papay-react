@@ -1,12 +1,28 @@
 import { Box, Stack } from '@mui/material';
 import TabPanel from "@mui/lab/TabPanel";
 
+// REDUX
+import { createSelector } from '@reduxjs/toolkit';
+import { retrieveFinishedOrders } from '../../screens/OrdersPage/selector';
+import { useSelector } from 'react-redux';
+
+/** REDUX SELECTOR */
+const finishedOrdersRetriever = createSelector(
+	retrieveFinishedOrders, 
+	(finishedOrders) => ({
+		finishedOrders
+	})
+);
+
 const finishedOrders = [
     [1, 2, 3],
     [1, 2, 3]
 ];
 
 export default function FinishedOrders(props: any) {
+	// INITIALIZATIONS 
+    // const { finishedOrders } = useSelector(finishedOrdersRetriever);
+
 	return (
 		<TabPanel value="3">
 			<Stack>
