@@ -30,7 +30,7 @@ class ProductApiService {
 
             return products;
         } catch (err: any) {
-            console.log(`ERROR :: getTargetProducts", ${err.message}`);
+            console.log(`ERROR :: getTargetProducts, ${err.message}`);
             throw err;
         }
     }
@@ -50,7 +50,7 @@ class ProductApiService {
             const product: Product = result.data.data;
             return product;
         } catch (err: any) {
-            console.log(`ERROR :: getChosenDish ${err.message}`);
+            console.log(`ERROR :: getChosenDish, ${err.message}`);
             throw err;
         }
     }

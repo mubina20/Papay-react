@@ -24,15 +24,10 @@ const actionDispatch = (dispatch: Dispatch) => ({
 	setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
 
-
-
-
-
 export function OrdersPage() {
 	// INITIALIZATIONS
 	const [value, setValue] = useState('1');
 	const { setPausedOrders, setProcessOrders, setFinishedOrders } = actionDispatch(useDispatch());
-
 
 	useEffect(() => {
 	}, []);

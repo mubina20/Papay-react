@@ -10,6 +10,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 import { verifiedMemberData } from "../../apiServices/verify";
+import Basket from "./basket";
 
 export function NavbarRestaurant(props: any) {
     return (
@@ -32,11 +33,13 @@ export function NavbarRestaurant(props: any) {
                     >
                         <NavLink to="/">Home</NavLink>
                         </Box>
+
                         <Box className="hover-line" onClick={props.setPath}>
                             <NavLink to="/restaurant" activeClassName="underline">
                                 Restaurants
                             </NavLink>
                         </Box>
+
                         {verifiedMemberData ? (
                         <Box className="hover-line" onClick={props.setPath}>
                             <NavLink to="/orders" activeClassName="underline">
@@ -44,11 +47,13 @@ export function NavbarRestaurant(props: any) {
                             </NavLink>
                         </Box>
                         ) : null }
+
                         <Box className="hover-line" onClick={props.setPath}>
                             <NavLink to="/community" activeClassName="underline">
                                 Community
                             </NavLink>
                         </Box>
+
                         {verifiedMemberData ? (
                         <Box className="hover-line" onClick={props.setPath}>
                             <NavLink to="/member-page" activeClassName="underline">
@@ -56,11 +61,21 @@ export function NavbarRestaurant(props: any) {
                             </NavLink>
                         </Box>
                         ) : null }
+
                         <Box className="hover-line" onClick={props.setPath}>
                             <NavLink to="/help" activeClassName="underline">
                                 Help
                             </NavLink>
                         </Box>
+
+                        <Basket
+                            cartItems={props.cartItems}
+                            onAdd={props.onAdd}
+                            onRemove={props.onRemove}
+                            onDelete={props.onDelete}
+                            onDeleteAll={props.onDeleteAll}
+                        />
+                        
                         {!verifiedMemberData? (
                         <Box>
                             <Button

@@ -27,7 +27,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ProductSearchObj } from '../../../types/others';
 import ProductApiService from '../../apiServices/productApiService';
 import RestaurantApiService from '../../apiServices/restaurantApiServise';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { serverApi } from '../../../lib/config';
 import assert from 'assert';
 import MemberApiService from '../../apiServices/memberApiServise';
@@ -63,7 +63,7 @@ const targetProductsRetriever = createSelector(
     })
 );
 
-export function OneRestaurant() {
+export function OneRestaurant(props: any) {
     // INITIALIZATIONS 
 	const history = useHistory();
 	let { restaurant_id } = useParams<{ restaurant_id: string }>();
@@ -279,7 +279,11 @@ export function OneRestaurant() {
                                                 </Badge>
                                             </Button>
 
-                                            <Button className="view_btn">
+                                            <Button className="view_btn" 
+                                                onClick={(e) => {props.onAdd(product); 
+                                                    e.stopPropagation()
+                                                }}
+                                            >
                                                 <img src={"/icons/shopping_cart.svg"} style={{ display: "flex" }} alt='' />
                                             </Button>
 

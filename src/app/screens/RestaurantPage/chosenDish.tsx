@@ -133,7 +133,7 @@ export function ChosenDish(props: any) {
                         pagination={{
                         clickable: true,
                         }}
-                        // modules={[FreeMode, Navigation, Thumbs]}
+                        modules={[FreeMode, Navigation, Thumbs]}
                         className="mySwiper"
                     >
                         {chosenProduct?.product_images.map((image) => {
@@ -200,7 +200,10 @@ export function ChosenDish(props: any) {
                             <span style={{ marginRight: "40px" }}>{chosenProduct?.product_price}</span>
                         </div>
                         <div className="button_box">
-                            <Button variant="contained" >
+                            <Button 
+                                variant="contained"
+                                onClick={(e) => {props.onAdd(chosenProduct)}}
+                            >
                                 Add to cart
                             </Button>
                         </div>

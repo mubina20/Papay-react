@@ -2,6 +2,7 @@ import { Box, Button , Container, Stack, Badge, Menu , ListItemIcon, MenuItem } 
 import { NavLink } from 'react-router-dom';
 import { Logout } from '@mui/icons-material';
 import { verifiedMemberData } from '../../apiServices/verify';
+import Basket from './basket';
 
 export function NavbarOthers(props: any) {
 	return (
@@ -11,15 +12,22 @@ export function NavbarOthers(props: any) {
 					<Box>
 						<img src="/icons/papay.svg" alt='papay'/>
 					</Box>
-					<Stack flexDirection={'row'} justifyContent="space-evenly" alignItems={'center'} className="navbar_links">
+					<Stack 
+						flexDirection={'row'} 
+						justifyContent="space-evenly" 
+						alignItems={'center'} 
+						className="navbar_links"
+					>
 						<Box className="hover-line" onClick={props.setPath}>
 							<NavLink to="/">Home</NavLink>
 						</Box>
+
 						<Box className="hover-line" onClick={props.setPath}>
 							<NavLink to="/restaurant" activeClassName="underline">
                             Restaurants
 							</NavLink>
 						</Box>
+
 						{verifiedMemberData ? (
 							<Box className="hover-line" onClick={props.setPath}>
 								<NavLink to="/orders" activeClassName="underline">
@@ -38,12 +46,22 @@ export function NavbarOthers(props: any) {
                                 MyPage
 								</NavLink>
 							</Box>
-						) : null}
+						) : null }
+
 						<Box className="hover-line" onClick={props.setPath}>
 							<NavLink to="/help" activeClassName="underline">
                             Help
 							</NavLink>
 						</Box>
+
+						<Basket
+                            cartItems={props.cartItems}
+                            onAdd={props.onAdd}
+                            onRemove={props.onRemove}
+                            onDelete={props.onDelete}
+                            onDeleteAll={props.onDeleteAll}
+                        />
+
 						{!verifiedMemberData? (
 							<Box>
 								<Button
@@ -90,9 +108,9 @@ export function NavbarOthers(props: any) {
 										height: 10,
 										bgcolor: 'background.paper',
 										transform: 'translateY(-50%) rotate(45deg)',
-										zIndex: 0,
-									},
-								},
+										zIndex: 0
+									}
+								}
 							}}
 							transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 							anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
