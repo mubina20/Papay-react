@@ -17,6 +17,7 @@ import { Order } from '../../../types/order';
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from '../../screens/OrdersPage/slice';
 import { useDispatch } from 'react-redux';
 import OrderApiService from '../../apiServices/orderApiService';
+import { verifiedMemberData } from '../../apiServices/verify';
 
 // REDUX SLICE 
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -89,13 +90,41 @@ export function OrdersPage(props: any) {
 					<Box className="order_info_box">
 						<Box display="flex" flexDirection="column" alignItems="center">
 							<div className="order_user_img">
-								<p className="order_user_name">Ali</p>
-								<p className="user">User</p>
+								
+								<img
+									src={verifiedMemberData?.mb_image}
+									className="order_user_avatar"
+									alt=''
+								/>
+								<Box className="order_user_icon_box">
+									<img src="/icons/user_icon.svg" alt='' />
+								</Box>
 							</div>
-							<div className="marginer">
-								<Marginer direction="horizontal" height="1" width="323" bg="#A1A1A1" />
-							</div>
-							<p><LocationOn />manzil kiritilmagan</p>
+							<h1 className="order_user_name">
+								{verifiedMemberData?.mb_nick}
+							</h1>
+							<p className="order_user_prof">
+								{verifiedMemberData?.mb_type ?? "Foydalanuvchi"}
+							</p>
+							<Box className={"order_user_address"}>
+								<Box className="spec_address_text">
+									<div className="marginer">
+										<Marginer direction="horizontal" height="1" width="323" bg="#A1A1A1" />
+									</div>
+									<Box
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										marginTop: "10px"
+										}}
+									>
+										<LocationOn/>
+										<p style={{lineHeight: "1px"}}>
+											{verifiedMemberData?.mb_address ?? "manzil kiritilmagan"}
+										</p>
+									</Box>
+								</Box>
+							</Box>
 						</Box>
 					</Box>
 				
