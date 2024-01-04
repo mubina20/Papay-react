@@ -60,24 +60,25 @@ export function NavbarOthers(props: any) {
                             onRemove={props.onRemove}
                             onDelete={props.onDelete}
                             onDeleteAll={props.onDeleteAll}
+							setOrderRebuild={props.setOrderRebuild}
                         />
 
-						{!verifiedMemberData? (
+						{!props.verifiedMemberData ? (
 							<Box>
 								<Button
 									variant="contained"
-									style={{ color: '#FFFFFF', background: '#1976d2' }}
+									style={{ color: "#ffffff", background: "#1976d2" }}
 									onClick={props.handleLoginOpen}
 								>
 									LOGIN
 								</Button>
 							</Box>
-						) : (
+							) : (
 							<img
-								style={{ width: '48px', height: '48px', borderRadius: '24px' }}
-								src={verifiedMemberData.mb_image}
-                                alt='Me'
+								style={{ width: "48px", height: "48px", borderRadius: "24px" }}
+								src={props.verifiedMemberData.mb_image}
 								onClick={props.handleLogOutClick}
+								alt=''
 							/>
 						)}
 
@@ -115,7 +116,7 @@ export function NavbarOthers(props: any) {
 							transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 							anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 						>
-							<MenuItem onClick={props.handlerLogoutRequest}>
+							<MenuItem onClick={props.handleLogOutRequest}>
 								<ListItemIcon>
 									<Logout fontSize="small" style={{ color: 'blue' }} />
 								</ListItemIcon>

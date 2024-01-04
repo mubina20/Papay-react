@@ -32,6 +32,46 @@ class OrderApiService {
             throw err;
         }
     }
+
+    async getMyOrder(order_status: string): Promise<any> {
+        try {
+            const url = `/orders?status=${order_status}`,
+                result = await axios.get(this.path + url, { withCredentials: true });
+        
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.state != "fail", result?.data?.message);
+            console.log("getMyOrder STATE ::", result.data.state);
+        
+            const orders: any = result.data.data;
+            console.log("orders:::", orders);
+
+            return orders;
+        } catch (err: any) {
+            console.log(`ERROR :: getMyOrder, ${err.message}`);
+            throw err;
+        }
+    }
+
+    async updateOrderStatus(data: any): Promise<any> {
+        try {
+            const url = "/orders/edit";
+            const result = await axios.post(
+                    this.path + url, 
+                    data, 
+                    { withCredentials: true }
+                );
+        
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.state != "muvaffaqiyatsiz", result?.data?.message);
+            console.log("updateOrderStatus STATE ::", result.data.state);
+        
+            const order: any = result.data.data;
+            return order;
+        } catch (err: any) {
+            console.log(`ERROR :: updateOrderStatus, ${err.message}`);
+            throw err;
+        }
+    }
 };
 
 export default OrderApiService;

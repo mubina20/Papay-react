@@ -16,6 +16,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Order } from '../../../types/order';
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from '../../screens/OrdersPage/slice';
 import { useDispatch } from 'react-redux';
+import OrderApiService from '../../apiServices/orderApiService';
 
 // REDUX SLICE 
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -24,15 +25,31 @@ const actionDispatch = (dispatch: Dispatch) => ({
 	setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
 
-export function OrdersPage() {
+export function OrdersPage(props: any) {
 	// INITIALIZATIONS
 	const [value, setValue] = useState('1');
 	const { setPausedOrders, setProcessOrders, setFinishedOrders } = actionDispatch(useDispatch());
 
 	useEffect(() => {
-	}, []);
+		const orderService = new OrderApiService();
 
-	//HANDLERS
+		orderService
+			.getMyOrder('paused')
+			.then((data) => setPausedOrders(data))
+			.catch((err) => console.log(err));
+
+		orderService
+			.getMyOrder('process')
+			.then((data) => setProcessOrders(data))
+			.catch((err) => console.log(err));
+
+		orderService
+			.getMyOrder('finished')
+			.then((data) => setFinishedOrders(data))
+			.catch((err) => console.log(err));
+	}, [props.orderRebuild]);
+
+	// HANDLERS
 	const handleChange = (event: any, newValue: string) => {
 		setValue(newValue);
 	};
@@ -61,9 +78,9 @@ export function OrdersPage() {
 							</Box>
 						</Box>
 						<Stack className="order_main_content">
-							<PausedOrders />
-							<ProcessOrders />
-							<FinishedOrders />
+							<PausedOrders setOrderRebuild={props.setOrderRebuild} />
+							<ProcessOrders setOrderRebuild={props.setOrderRebuild} />
+							<FinishedOrders setOrderRebuild={props.setOrderRebuild} />
 						</Stack>
 					</TabContext>
 				</Stack>
