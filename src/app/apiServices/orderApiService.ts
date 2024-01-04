@@ -3,6 +3,7 @@ import { CartItem } from "../../types/others";
 import { serverApi } from "../../lib/config";
 import assert from "assert";
 import { Definer } from "../../lib/Definer";
+import { Order } from "../../types/order";
 
 class OrderApiService {
     private readonly path: string;
@@ -11,7 +12,7 @@ class OrderApiService {
         this.path = serverApi;
     }
 
-    async createOrder(data: CartItem[]): Promise<any> {
+    async createOrder(data: CartItem[]) {
         try {
             const url = "/orders/create";
             const result = await axios.post(
@@ -25,15 +26,16 @@ class OrderApiService {
             console.log("state", result.data.state);
 
             const order: any = result.data.data;
-            console.log("ORDER ::", order)
-            return true
+            console.log("ORDER ::", order);
+
+            return true;
         } catch (err: any) {
             console.log(`ERROR :: createOrder, ${err.message}`);
             throw err;
         }
     }
 
-    async getMyOrder(order_status: string): Promise<any> {
+    async getMyOrder(order_status: string): Promise<Order[]> {
         try {
             const url = `/orders?status=${order_status}`,
                 result = await axios.get(this.path + url, { withCredentials: true });
@@ -52,7 +54,7 @@ class OrderApiService {
         }
     }
 
-    async updateOrderStatus(data: any): Promise<any> {
+    async updateOrderStatus(data: any): Promise<Order> {
         try {
             const url = "/orders/edit";
             const result = await axios.post(
