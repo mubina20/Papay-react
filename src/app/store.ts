@@ -1,19 +1,21 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import HomePageReducer from './screens/HomePage/slice';
-import reduxLogger from "redux-logger"
-import RestaurantPageReducer from './screens/RestaurantPage/slice';
-import OrdersPageReducer from './screens/OrdersPage/slice';
-import CommunityPageReducer from './screens/CommunityPage/slice';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import HomePageReducer from "./screens/HomePage/slice";
+import reduxLogger from "redux-logger";
+import RestaurantPageReducer from "./screens/RestaurantPage/slice";
+import OrdersPageReducer from "./screens/OrdersPage/slice";
+import CommunityPageReducer from "./screens/CommunityPage/slice";
+import MemberPageReducer from "./screens/MemberPage/slice";
 
 export const store = configureStore({
-    middleware: (getDefaultMiddleWare) => getDefaultMiddleWare().concat(reduxLogger),
-
-    reducer: {
-        homePage: HomePageReducer,
-        restaurantPage: RestaurantPageReducer,
-        ordersPage: OrdersPageReducer,
-        communityPage: CommunityPageReducer
-    }
+  middleware: (getDefaultMiddleWare) =>
+    getDefaultMiddleWare().concat(reduxLogger),
+  reducer: {
+    homePage: HomePageReducer,
+    restaurantPage: RestaurantPageReducer,
+    ordersPage: OrdersPageReducer,
+    communityPage: CommunityPageReducer,
+    memberPage: MemberPageReducer
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

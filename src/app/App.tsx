@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"; 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import "../css/App.css";
 import "../css/navbar.css";
 import "../css/footer.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { RestaurantPage } from "./screens/RestaurantPage";
 import { CommunityPage } from "./screens/CommunityPage";
@@ -29,7 +29,7 @@ import { CartItem } from "../types/others";
 import { Product } from "../types/product";
 
 function App() {
-  //INITIALIZATION 
+  // INITIALIZATIONS
   const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(
     null
   );
@@ -38,7 +38,6 @@ function App() {
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [orderRebuild, setOrderRebuild] = useState<Date>(new Date());
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -55,15 +54,18 @@ function App() {
     if (member_data) {
       member_data.mb_image = member_data.mb_image
         ? `${serverApi}/${member_data.mb_image}`
-        : "/auth/13.jpg";
+        : "/auth/default_user.svg";
       setVerifiedMemberData(member_data);
     }
   }, [signUpOpen, loginOpen]);
 
   // HANDLERS 
   const handleSignUpOpen = () => setSignUpOpen(true);
+
   const handleSignUpClose = () => setSignUpOpen(false);
+
   const handleLoginOpen = () => setLoginOpen(true);
+
   const handleLoginClose = () => setLoginOpen(false);
   const handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -135,8 +137,8 @@ function App() {
     localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   };
   const onDeleteAll = () => {
-    setCartItems([])
-    localStorage.removeItem("cart_data")
+    setCartItems([]);
+    localStorage.removeItem("cart_data");
   };
 
   return (
@@ -155,7 +157,7 @@ function App() {
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
-          onDelete = {onDelete}
+          onDelete={onDelete}
           onDeleteAll={onDeleteAll}
           setOrderRebuild={setOrderRebuild}
         />
@@ -173,7 +175,7 @@ function App() {
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
-          onDelete = {onDelete}
+          onDelete={onDelete}
           onDeleteAll={onDeleteAll}
           setOrderRebuild={setOrderRebuild}
         />
@@ -191,7 +193,7 @@ function App() {
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
-          onDelete = {onDelete}
+          onDelete={onDelete}
           onDeleteAll={onDeleteAll}
           setOrderRebuild={setOrderRebuild}
         />
@@ -205,13 +207,14 @@ function App() {
           <CommunityPage />
         </Route>
         <Route path="/orders">
-          <OrdersPage 
+          <OrdersPage
             orderRebuild={orderRebuild}
             setOrderRebuild={setOrderRebuild}
+            verifiedMemberData={verifiedMemberData}
           />
         </Route>
         <Route path="/member-page">
-          <MemberPage />
+          <MemberPage verifiedMemberData={verifiedMemberData}/>
         </Route>
         <Route path="/help">
           <HelpPage />
@@ -235,6 +238,10 @@ function App() {
       />
     </Router>
   );
+}
+
+function Home() {
+  return <h2>Home</h2>;
 }
 
 export default App;

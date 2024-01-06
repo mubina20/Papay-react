@@ -1,97 +1,118 @@
-import { Box, Link, Stack} from "@mui/material";
+import { Box, Link, Stack } from "@mui/material";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Favorite from "@mui/icons-material/Favorite";
+import Checkbox from "@mui/material/Checkbox";
 import moment from "moment";
-import { Typography } from "@mui/joy";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import { BoArticle } from "../../../types/boArticle";
+import { serverApi } from "../../../lib/config";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import MemberApiService from "../../apiServices/memberApiServise";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export function TargetArticles(props: any) {
-    return (
-        <Stack>
-            {props.targetBoArticles?.map((article: any, index: string) => {
-                const art_image_url = "/community/default_article.svg";
-                return (
-                    <Link
-                        className={"all_article_box"}
-                        sx={{ textDecoration: "none" }}
-                        href={``}
+  
+  // HANDLERS 
+  const targetLikeHandler = async (e: any) => {
+    try {
+      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+
+      const memberService = new MemberApiService();
+      const like_result = await memberService.memberLikeTarget({
+        like_ref_id: e.target.id,
+        group_type: "community",
+      });
+      assert.ok(like_result, Definer.general_err1);
+      await sweetTopSmallSuccessAlert("success", 700, false);
+      props.setArticlesRebuild(new Date());
+    } catch (err: any) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
+  return (
+    <Stack>
+      {props.targetBoArticles?.map((article: BoArticle) => {
+        const art_image_url = article?.art_image
+          ? `${serverApi}/${article.art_image}`
+          : "/community/shoma.jpg";
+        return (
+          <Link className="all_article_box" sx={{ textDecoration: "none" }}>
+            <Box
+              className={"all_article_img"}
+              sx={{ backgroundImage: `url(${art_image_url})` }}
+            ></Box>
+            <Box className={"all_article_container"}>
+              <Box alignItems={"center"} display={"flex"}>
+                <img
+                  src="/community/shoma.jpg"
+                  alt=""
+                  width={"35px"}
+                  style={{ borderRadius: "50%", backgroundSize: "cover" }}
+                />
+                <span className="all_article_author_user">
+                  {article?.member_data.mb_nick}
+                </span>
+              </Box>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                sx={{ mt: "15px" }}
+              >
+                <span className="all_article_title">{article?.bo_id}</span>
+                <p className="all_article_desc">{article?.art_subject}</p>
+              </Box>
+              <Box
+                flexDirection={"row"}
+                style={{ display: "flex" }}
+                justifyContent={"flex-end"}
+              >
+                <Box
+                  flexDirection={"row"}
+                  style={{ display: "flex" }}
+                  justifyContent={"space-between"}
+                  marginRight={"14px"}
+                >
+                  <div className="article_date">
+                    {moment().format("YY-MM-DD HH:mm")}
+                  </div>
+                  <div className="evaluation_box">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginRight: "30px",
+                      }}
                     >
-                        <Box
-                            className={"all_article_img"}
-                            sx={{
-                                backgroundImage: `url(${art_image_url})`,
-                            }}
-                        ></Box>
-                        <Box className={"all_article_container"}>
-                            <Box alignItems={"center"} display={"flex"}>
-                                <img
-                                    src={"/auth/default_user.svg"}
-                                    width={"35px"}
-                                    style={{ borderRadius: "50%", backgroundSize: "cover" }}
-                                    alt=""
-                                />
-                                <span className={"all_article_author_user"}> Ali </span>
-                            </Box>
-                            <Box
-                                display={"flex"}
-                                flexDirection={"column"}
-                                sx={{ mt: "15px" }}
-                            >
-                                <span className={"all_article_title"}> Evaluation </span>
-                                <p className={"all_article_desc"}>
-                                    Texas De Brazil zo'r restaurant!
-                                </p>
-                            </Box>
-                            <Box>
-                                <Box
-                                    className={"article_share"}
-                                    style={{ width: "100%", height: "auto" }}
-                                    sx={{ mb: "10px" }}
-                                >
-                                    <Box
-                                        className={"article_share_main"}
-                                        style={{
-                                        color: "#fff",
-                                        marginLeft: "150px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        }}
-                                    >
-                                        <span>{moment().format("YY-MM-DD HH:mm")}</span>
+                      <Checkbox
+                        {...label}
+                        icon={<FavoriteBorder />}
+                        checkedIcon={<Favorite style={{ color: "red", fontSize: 20, marginRight: "7px" }} />}
+                        id={article?._id}
+                        onClick={targetLikeHandler}
+                        checked={
+                          article?.me_liked && article?.me_liked[0]?.my_favorite
+                            ? true
+                            : false
+                        }
+                      />
 
-                                        <Stack marginLeft={"40px"} display={"flex"} flexDirection={"row"} gap={"12px"}   > 
-                                            <Typography
-                                            level="body-sm"
-                                            sx={{
-                                                fontWeight: "md", 
-                                                color: "neutral.300", 
-                                                alignItems: "center",
-                                                display: "flex",
-                                            }}
-                                            >
-                                            <FavoriteBorder sx={{ fontSize: 20, marginRight: "7px"}} />
-                                            <div>100</div>
-                                            </Typography>
-
-                                            <Typography 
-                                            level="body-sm"
-                                            sx={{
-                                                fontWeight: "md",
-                                                color: "neutral.300",
-                                                alignItems: "center",
-                                                display: "flex",
-                                            }}
-                                            >
-                                            <VisibilityIcon sx={{ fontSize: 20, marginRight: "7px" }} />
-                                            1000{" "}
-                                            </Typography>
-                                        </Stack>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </Box>
-                    </Link>
-                );
-            })}
-        </Stack>
-    );
+                      <span>{article?.art_likes}</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <RemoveRedEyeIcon sx={{ mr: "10px" }} />
+                      <span>{article?.art_views}</span>
+                    </div>
+                  </div>
+                </Box>
+              </Box>
+            </Box>
+          </Link>
+        );
+      })}
+    </Stack>
+  );
 }
