@@ -13,7 +13,8 @@ import { CommunityChats } from "./communityChats";
 import { TargetArticles } from "./targetArticles";
 import { BoArticle, SearchArticlesObj } from "../../../types/boArticle";
 import CommunityApiService from "../../apiServices/communityApiService";
-//REDUX
+
+// REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { retrieveTargetBoArticles } from "./selector";
 import { createSelector } from "reselect";
@@ -30,7 +31,7 @@ const actionDispatch = (dispach: Dispatch) => ({
 const targetBoArticlesRetriever = createSelector(
   retrieveTargetBoArticles,
   (targetBoArticles) => ({
-    targetBoArticles,
+    targetBoArticles
   })
 );
 
@@ -41,7 +42,7 @@ export function CommunityPage(props: any) {
 
   const [value, setValue] = React.useState("1");
   const [searchArticlesObj, setSearchArticlesObj] = useState<SearchArticlesObj>(
-    { bo_id: "all", page: 1, limit: 1 }
+    { bo_id: "all", page: 1, limit: 5 }
   );
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
 
@@ -73,10 +74,12 @@ export function CommunityPage(props: any) {
     setSearchArticlesObj({ ...searchArticlesObj });
     setValue(newValue);
   };
+
   const handlePaginationChange = (event: any, value: number) => {
     searchArticlesObj.page = value;
     setSearchArticlesObj({ ...searchArticlesObj });
   };
+  
   return (
     <div className="community_page">
       <div className="community_frame">

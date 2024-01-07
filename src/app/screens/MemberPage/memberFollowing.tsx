@@ -1,15 +1,16 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import {
-  	retrieveMemberFollowings
+  retrieveMemberFollowings
 } from "./selector";
 import { createSelector } from "reselect";
 import { Dispatch } from "@reduxjs/toolkit";
 import {
-  	setMemberFollowings
+  setMemberFollowings
 } from "./slice";
 import { Follower } from "../../../types/follow";
 
@@ -23,14 +24,14 @@ const actionDispatch = (dispach: Dispatch) => ({
 const memberFollowingsRetriever = createSelector(
   retrieveMemberFollowings,
   (memberFollowings) => ({
-    memberFollowings,
+    memberFollowings
   })
 );
 
 const followings = [
   { mb_nick: "mahmud" },
   { mb_nick: "jonibek" },
-  { mb_nick: "madina" },
+  { mb_nick: "madina" }
 ];
 
 export function MemberFollowing(props: any) {

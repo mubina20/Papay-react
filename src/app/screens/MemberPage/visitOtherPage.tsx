@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import SettingsIcon from "@mui/icons-material/Settings";
 import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import Tab from "@mui/material/Tab";
@@ -49,39 +48,40 @@ const actionDispatch = (dispach: Dispatch) => ({
 const chosenMemberRetriever = createSelector(
   retrieveChosenMember,
   (chosenMember) => ({
-    chosenMember,
+    chosenMember
   })
 );
+
 const chosenMemberBoArticlesRetriever = createSelector(
   retrieveChosenSingleBoArticle,
   (chosenMemberBoArticles) => ({
-    chosenMemberBoArticles,
+    chosenMemberBoArticles
   })
 );
+
 const chosenSingleBoArticlesRetriever = createSelector(
   retrieveChosenMemberBoArticles,
   (chosenSingleBoArticles) => ({
-    chosenSingleBoArticles,
+    chosenSingleBoArticles
   })
 );
-export function VisitOtherPage(_props: any) {
+
+export function VisitOtherPage(props: any) {
   //INITIALIZIATION
   const {
     setChosenMember,
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
   } = actionDispatch(useDispatch());
+
   const { chosenMember } = useSelector(chosenMemberRetriever);
-  const { chosenMemberBoArticles } = useSelector(
-    chosenMemberBoArticlesRetriever
-  );
-  const { chosenSingleBoArticles } = useSelector(
-    chosenSingleBoArticlesRetriever
-  );
+  const { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever);
+  const { chosenSingleBoArticles } = useSelector(chosenSingleBoArticlesRetriever);
+
   const [value, setValue] = useState("4");
 
   // HANDLERS
-  const handleChange = (_event: any, newValue: string) => {
+  const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
 

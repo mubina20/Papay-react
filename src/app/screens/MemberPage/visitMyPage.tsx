@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -51,15 +51,17 @@ const actionDispatch = (dispach: Dispatch) => ({
 const chosenMemberRetriever = createSelector(
   retrieveChosenMember,
   (chosenMember) => ({
-    chosenMember,
+    chosenMember
   })
 );
+
 const chosenMemberBoArticlesRetriever = createSelector(
   retrieveChosenSingleBoArticle,
   (chosenMemberBoArticles) => ({
-    chosenMemberBoArticles,
+    chosenMemberBoArticles
   })
 );
+
 const chosenSingleBoArticlesRetriever = createSelector(
   retrieveChosenMemberBoArticles,
   (chosenSingleBoArticles) => ({
@@ -67,24 +69,22 @@ const chosenSingleBoArticlesRetriever = createSelector(
   })
 );
 
-export function VisitMyPage(_props: any) {
+export function VisitMyPage(props: any) {
   //INITIALIZIATIONS
   const {
     setChosenMember,
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
   } = actionDispatch(useDispatch());
+
   const { chosenMember } = useSelector(chosenMemberRetriever);
-  const { chosenMemberBoArticles } = useSelector(
-    chosenMemberBoArticlesRetriever
-  );
-  const { chosenSingleBoArticles } = useSelector(
-    chosenSingleBoArticlesRetriever
-  );
+  const { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever);
+  const { chosenSingleBoArticles } = useSelector(chosenSingleBoArticlesRetriever);
+  
   const [value, setValue] = useState("3");
 
   // HANDLERS
-  const handleChange = (_event: any, newValue: string) => {
+  const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
 

@@ -1,6 +1,7 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,7 +24,7 @@ const actionDispatch = (dispach: Dispatch) => ({
 const memberFollowersRetriever = createSelector(
   retrieveMemberFollowers,
   (memberFollowers) => ({
-    memberFollowers,
+    memberFollowers
   })
 );
 
