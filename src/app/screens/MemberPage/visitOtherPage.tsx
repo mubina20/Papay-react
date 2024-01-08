@@ -18,6 +18,7 @@ import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
 import TViewer from "../../components/tuiEditor/TViewer";
+
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -67,7 +68,7 @@ const chosenSingleBoArticlesRetriever = createSelector(
 );
 
 export function VisitOtherPage(props: any) {
-  //INITIALIZIATION
+  // INITIALIZIATIONS
   const {
     setChosenMember,
     setChosenMemberBoArticles,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -21,6 +21,7 @@ import { MemberFollowing } from "./memberFollowing";
 import { MySettings } from "./mySettings";
 import { TuiEditor } from "../../components/tuiEditor/TuiEditor";
 import TViewer from "../../components/tuiEditor/TViewer";
+
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -36,7 +37,11 @@ import {
   setChosenMemberBoArticles,
   setChosenSingleBoArticle,
 } from "./slice";
-import { BoArticle } from "../../../types/boArticle";
+import { BoArticle, SearchMemberArticlesObj } from "../../../types/boArticle";
+import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert";
+import CommunityApiService from "../../apiServices/communityApiService";
+import MemberApiService from "../../apiServices/memberApiServise";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -49,44 +54,86 @@ const actionDispatch = (dispach: Dispatch) => ({
 
 // REDUX SELECTOR
 const chosenMemberRetriever = createSelector(
-  retrieveChosenMember,
+  retrieveChosenMember, 
   (chosenMember) => ({
-    chosenMember
+	  chosenMember
   })
 );
-
-const chosenMemberBoArticlesRetriever = createSelector(
-  retrieveChosenSingleBoArticle,
+const chosenMemberBoArticleRetriever = createSelector(
+  retrieveChosenMemberBoArticles, 
   (chosenMemberBoArticles) => ({
-    chosenMemberBoArticles
+	  chosenMemberBoArticles
   })
 );
-
-const chosenSingleBoArticlesRetriever = createSelector(
-  retrieveChosenMemberBoArticles,
-  (chosenSingleBoArticles) => ({
-    chosenSingleBoArticles,
+const chosenSingleBoArticleRetriever = createSelector(
+  retrieveChosenSingleBoArticle, 
+  (chosenSingleBoArticle) => ({
+	  chosenSingleBoArticle
   })
 );
 
 export function VisitMyPage(props: any) {
-  //INITIALIZIATIONS
+  // INITIALIZIATIONS
   const {
     setChosenMember,
     setChosenMemberBoArticles,
     setChosenSingleBoArticle,
   } = actionDispatch(useDispatch());
 
-  const { chosenMember } = useSelector(chosenMemberRetriever);
-  const { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever);
-  const { chosenSingleBoArticles } = useSelector(chosenSingleBoArticlesRetriever);
-  
   const [value, setValue] = useState("3");
+  const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+  const { chosenMember } = useSelector(chosenMemberRetriever);
+  const { chosenMemberBoArticles } = useSelector(chosenMemberBoArticleRetriever);
+	const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
+  const [memberArticleSearchObj, setMemberArticleSearchObj] = useState<SearchMemberArticlesObj>({
+		mb_id: 'none',
+		page: 1,
+		limit: 5,
+	});
+  console.log("chosenMemberBoArticles :: ", chosenMemberBoArticles)
+  console.log("chosenSingleBoArticles :: ", chosenSingleBoArticle)
+
+  useEffect(() => {
+		if (!localStorage.getItem("member_data")) {
+			sweetFailureProvider('Please login first!', true, true);
+		}
+
+    const communityService = new CommunityApiService();
+		communityService
+			.getMemberCommunityArticles(memberArticleSearchObj)
+			.then((data) => setChosenMemberBoArticles(data))
+			.catch((err) => console.log(err));
+
+    const memberService = new MemberApiService();
+		memberService
+			.getChosenMember(verifiedMemberData?._id)
+			.then((data) => setChosenMember(data))
+			.catch((err) => console.log(err));
+  }, [memberArticleSearchObj, articlesRebuild]);
+  
 
   // HANDLERS
   const handleChange = (event: any, newValue: string) => {
     setValue(newValue);
   };
+
+  const handlePaginationChange = (event: any, value: number) => {
+		memberArticleSearchObj.page = value;
+		setMemberArticleSearchObj({ ...memberArticleSearchObj });
+	};
+
+  const renderChosenArticleHandler = async (art_id: string) => {
+		try {
+			const communityService = new CommunityApiService();
+			communityService
+				.getChosenArticle(art_id)
+				.then((data) => setChosenSingleBoArticle(data))
+				.catch((err) => console.log(err));
+		} catch (err: any) {
+			console.log(err);
+			sweetErrorHandling(err).then();
+		}
+	};
 
   return (
     <div className="my_page">
@@ -98,7 +145,11 @@ export function VisitMyPage(props: any) {
                 <TabPanel value="1">
                   <Box className="menu_name">Mening Maqolalarim</Box>
                   <Box className="menu_content">
-                    <MemberPosts />
+                    <MemberPosts 
+                      chosenMemberBoArticles={chosenMemberBoArticles}
+											renderChosenArticleHandler={renderChosenArticleHandler}
+                      setArticlesRebuild={setArticlesRebuild}
+                    />
                     <Stack
                       sx={{ my: "40px" }}
                       direction={"row"}
@@ -119,6 +170,7 @@ export function VisitMyPage(props: any) {
                               color="secondary"
                             />
                           )}
+                          onChange={handlePaginationChange}
                         />
                       </Box>
                     </Stack>
