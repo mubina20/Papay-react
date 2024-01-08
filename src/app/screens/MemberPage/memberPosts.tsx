@@ -15,7 +15,8 @@ export function MemberPosts(props: any) {
     // INITIALIZIATIONS
     const {
         chosenMemberBoArticles,
-        setArticlesRebuild
+        setArticlesRebuild,
+        renderChosenArticleHandler
     } = props;
 
     // HANDLERS 
@@ -45,7 +46,12 @@ export function MemberPosts(props: any) {
                     ? `${serverApi}/${article.art_image}`
                     : "/community/default_article.svg";
                 return (
-                    <Stack className="all_article_box" sx={{ cursor: "pointer", }} key={article._id} >
+                    <Stack 
+                        className="all_article_box" 
+                        sx={{ cursor: "pointer", }} 
+                        // key={article?._id}
+                        onClick={() => renderChosenArticleHandler(article?._id)}
+                    >
                         <Box
                             className="all_article_img"
                             sx={{ backgroundImage: `url(${image_path})` }}

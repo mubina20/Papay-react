@@ -10,10 +10,10 @@ const TViewer = (props: any) => {
         <Stack sx={{ background: "white", mt: "30px", borderRadius: "10px" }}>
             <Box sx={{ m: "40px" }}>
                 <Viewer
-                /* @ts-ignore */
-                ref={editorRef}
-                initialValue={props.text}
-                height={"600px"}
+                    /* @ts-ignore */
+                    ref={editorRef}
+                    initialValue={props.chosenSingleBoArticle?.art_subject}
+                    height={"600px"}
                 />
             </Box>
         </Stack>

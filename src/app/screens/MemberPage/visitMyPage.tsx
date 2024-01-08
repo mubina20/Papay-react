@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, Tabs } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -8,13 +8,12 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Button from "@mui/material/Button";
 import TabContext from "@mui/lab/TabContext";
 import Tab from "@mui/material/Tab";
-import Tablist from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import TabList from "@mui/lab/TabList";
+// import TabList from "@mui/lab/TabList";
 import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
@@ -125,9 +124,12 @@ export function VisitMyPage(props: any) {
   const renderChosenArticleHandler = async (art_id: string) => {
 		try {
 			const communityService = new CommunityApiService();
-			communityService
+		  communityService
 				.getChosenArticle(art_id)
-				.then((data) => setChosenSingleBoArticle(data))
+				.then((data) => {
+					setChosenSingleBoArticle(data)
+					setValue("5")
+				})
 				.catch((err) => console.log(err));
 		} catch (err: any) {
 			console.log(err);
@@ -158,8 +160,8 @@ export function VisitMyPage(props: any) {
                     >
                       <Box className={"bottom_box"}>
                         <Pagination
-                          count={3}
-                          page={1}
+                          count={memberArticleSearchObj.page >= 3 ? memberArticleSearchObj.page + 1 : 3}
+													page={memberArticleSearchObj.page}
                           renderItem={(item) => (
                             <PaginationItem
                               components={{
@@ -200,7 +202,7 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"5"}>
                   <Box className={"menu_name"}>Featured Article</Box>
                   <Box className={"menu_content"}>
-                    <TViewer />
+                    <TViewer chosenSingleBoArticle={chosenSingleBoArticle} />
                   </Box>
                 </TabPanel>
 
@@ -252,7 +254,8 @@ export function VisitMyPage(props: any) {
                   justifyContent={"flex-end"}
                   sx={{ mt: "10px" }}
                 >
-                  <Tablist
+                  <Tabs
+                  value={value}
                     onChange={handleChange}
                     aria-label="lab API tabs example"
                   >
@@ -268,12 +271,13 @@ export function VisitMyPage(props: any) {
                         </Button>
                       )}
                     />
-                  </Tablist>
+                  </Tabs>
                 </Box>
               </Box>
 
               <Box className={"my_page_menu"}>
-                <TabList
+                <Tabs
+                value={value}
                   onChange={handleChange}
                   aria-label="lab API tabs example"
                 >
@@ -316,7 +320,7 @@ export function VisitMyPage(props: any) {
                       </div>
                     )}
                   />
-                </TabList>
+                </Tabs>
               </Box>
             </Stack>
           </TabContext>

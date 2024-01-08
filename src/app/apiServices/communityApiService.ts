@@ -48,22 +48,24 @@ class CommunityApiService {
     }
   };
 
-  public async getChosenArticle(art_id: string): Promise<BoArticle> {
+  public async getChosenArticle(art_id: string) {
     try {
-      let url = `community/single-article/${art_id}`;
-      const result = await axios.get(this.path + url, {withCredentials: true});
+      let url = `/community/single-article/${art_id}`;
+      const result = await axios.get(this.path + url, {
+        withCredentials: true,
+      });
 
       assert.ok(result?.data, Definer.general_err1);
       assert.ok(result?.data?.state != "fail", result?.data?.message);
-      console.log("getChosenArticle STATE ::", result.data.state);
+      console.log("state:::", result.data.state);
 
       const article: BoArticle = result.data.data;
       return article;
-    } catch (err: any) {
-      console.log(`ERROR :: getChosenArticle ${err.message}`);
-      throw err ;
+    } catch (error: any) {
+      console.log("ERROR ::: getChosenArticle", error.message);
+      throw error;
     }
-  };
+  }
 };
 
 export default CommunityApiService;
