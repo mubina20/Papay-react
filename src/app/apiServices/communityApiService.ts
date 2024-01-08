@@ -61,9 +61,9 @@ class CommunityApiService {
 
       const article: BoArticle = result.data.data;
       return article;
-    } catch (error: any) {
-      console.log("ERROR ::: getChosenArticle", error.message);
-      throw error;
+    } catch (err: any) {
+      console.log(`ERROR :: getChosenArticle ${err.message}`);
+      throw err;
     }
   }
 };

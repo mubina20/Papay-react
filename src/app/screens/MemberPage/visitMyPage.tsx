@@ -41,6 +41,7 @@ import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAler
 import CommunityApiService from "../../apiServices/communityApiService";
 import MemberApiService from "../../apiServices/memberApiServise";
 import { verifiedMemberData } from "../../apiServices/verify";
+import { serverApi } from "../../../lib/config";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -81,6 +82,7 @@ export function VisitMyPage(props: any) {
 
   const [value, setValue] = useState("3");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
+  const [followerRebuild, setFollowerRebuild] = useState<Boolean>(false);
   const { chosenMember } = useSelector(chosenMemberRetriever);
   const { chosenMemberBoArticles } = useSelector(chosenMemberBoArticleRetriever);
 	const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
@@ -92,6 +94,7 @@ export function VisitMyPage(props: any) {
   console.log("chosenMemberBoArticles :: ", chosenMemberBoArticles)
   console.log("chosenSingleBoArticles :: ", chosenSingleBoArticle)
 
+  
   useEffect(() => {
 		if (!localStorage.getItem("member_data")) {
 			sweetFailureProvider('Please login first!', true, true);
@@ -181,14 +184,24 @@ export function VisitMyPage(props: any) {
                 <TabPanel value={"2"}>
                   <Box className={"menu_name"}>Followers</Box>
                   <Box className={"menu_content"}>
-                    <MemberFollowers actions_enabled={true} />
+                    <MemberFollowers 
+                      actions_enabled={true} 
+                      followerRebuild={followerRebuild}
+                      setFollowerRebuild={setFollowerRebuild}
+                      mb_id={props.verifiedMemberData?._id}
+                    />
                   </Box>
                 </TabPanel>
 
                 <TabPanel value={"3"}>
                   <Box className={"menu_name"}>Following</Box>
                   <Box className={"menu_content"}>
-                    <MemberFollowing actions_enabled={true} />
+                    <MemberFollowing 
+                      actions_enabled={true} 
+                      followerRebuild={followerRebuild}
+                      setFollowerRebuild={setFollowerRebuild}
+                      mb_id={verifiedMemberData?._id}
+                    />
                   </Box>
                 </TabPanel>
 
@@ -227,16 +240,16 @@ export function VisitMyPage(props: any) {
                 >
                   <div className="order_user_img">
                     <img
-                      src="/auth/default_user.svg"
+                      src={chosenMember?.mb_image ? `${serverApi}/${chosenMember.mb_image}` : '/auth/default_user.svg'}
                       className="order_user_avatar"
                       alt=""
                     />
                     <div className="order_user_icon_box">
-                      <img src="/icons/user_icon.svg" alt="" />
+                      <img src={chosenMember?.mb_type === 'RESTAURANT' ? '/auth/restaurant.svg' : '/icons/user_icon.svg'} alt="" />
                     </div>
                   </div>
-                  <span className="order_user_name">Mubina</span>
-                  <span className="order_user_prof">USER</span>
+                  <span className="order_user_name">{chosenMember?.mb_nick}</span>
+                  <span className="order_user_prof">{chosenMember?.mb_type}</span>
                 </Box>
                 <Box className={"user_media_box"}>
                   <FacebookIcon />
@@ -289,7 +302,7 @@ export function VisitMyPage(props: any) {
                         className={`menu_box ${value}`}
                         onClick={() => setValue("1")}
                       >
-                        <img src="/icons/pencil.svg" alt="" />
+                        <img src="/icons/post.svg" alt="" />
                         <span>Maqolalarim</span>
                       </div>
                     )}
@@ -302,7 +315,7 @@ export function VisitMyPage(props: any) {
                         className={`menu_box ${value}`}
                         onClick={() => setValue("2")}
                       >
-                        <img src="/icons/group.svg" alt="" />
+                        <img src="/icons/followers.svg" alt="" />
                         <span>Follower</span>
                       </div>
                     )}
@@ -315,7 +328,7 @@ export function VisitMyPage(props: any) {
                         className={`menu_box ${value}`}
                         onClick={() => setValue("3")}
                       >
-                        <img src="/icons/user.svg" alt="" />
+                        <img src="/icons/following.svg" alt="" />
                         <span>Following</span>
                       </div>
                     )}
