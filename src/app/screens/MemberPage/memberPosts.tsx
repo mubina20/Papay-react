@@ -43,7 +43,7 @@ export function MemberPosts(props: any) {
         <Box className={"post_content"}>
             {chosenMemberBoArticles.map((article: BoArticle) => {
                 const image_path = article.art_image
-                    ? `${serverApi}/${article.art_image}`
+                    ? `${serverApi}/${article.art_image}`.replaceAll('\\','/')
                     : "/community/default_article.svg";
                 return (
                     <Stack 

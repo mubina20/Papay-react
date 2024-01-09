@@ -1,7 +1,7 @@
 import axios from "axios";
 import assert from "assert";
 import { Definer } from "../../lib/Definer";
-import { BoArticle, SearchArticlesObj, SearchMemberArticlesObj } from "../../types/boArticle";
+import { BoArticle, BoArticleInput, SearchArticlesObj, SearchMemberArticlesObj } from "../../types/boArticle";
 import { serverApi } from "../../lib/config";
 
 class CommunityApiService {
@@ -65,7 +65,53 @@ class CommunityApiService {
       console.log(`ERROR :: getChosenArticle ${err.message}`);
       throw err;
     }
-  }
+  };
+
+  public async uploadImageToServer(image: any) {
+    try {
+      let formData = new FormData();
+      formData.append('community_image', image);
+      console.log("IMAGE :::", image);
+
+      const result = await axios(`${this.path}/community/image`, {
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      });
+
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("uploadImageToServer STATE ::", result.data.state);
+
+      const iamge_name: string = result.data.data;
+      return iamge_name;
+    } catch (err: any) {
+      console.log(`ERROR :: uploadImageToServer ${err.message}`);
+      throw err;
+    }
+  };
+
+  public async createArticles(data: BoArticleInput) {
+    try {
+      const result = await axios.post(
+        this.path + "/community/create", 
+        data,
+        {withCredentials: true}
+      );
+
+      assert.ok(result?.data, Definer.general_err1);
+      assert.ok(result?.data?.state != "fail", result?.data?.message);
+      console.log("createArticles STATE ::", result.data.state);
+
+      const articles: BoArticle[] = result.data.data;
+      return articles;
+    } catch (err: any) {
+      console.log(`ERROR :: createArticles ${err.message}`);
+      throw err;
+    }
+  };
 };
 
 export default CommunityApiService;
