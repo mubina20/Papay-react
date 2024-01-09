@@ -18,7 +18,7 @@ export function MemberPage(props: any) {
     const chosen_mb_id: string | null=query.get("mb_id") ?? null;
     const chosen_art_id: string | null = query.get("art_id") ?? null;
     
-    console.log("query test ::", query.get("test"));
+    console.log("MB_ID ::::", query.get("mb_id"));
     
     return (
         <div className="restaurant_page">

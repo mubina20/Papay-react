@@ -36,7 +36,7 @@ const memberFollowingsRetriever = createSelector(retrieveMemberFollowings, (memb
 export function MemberFollowing(props: any) {
   // INITIALIZATIONS 
 	const history = useHistory();
-	const { setFollowerRebuild, mb_id, followerRebuild } = props;
+	const { setFollowerRebuild, mb_id, followRebuild } = props;
 	const { setMemberFollowings } = actionDispatch(useDispatch());
 	const { memberFollowings } = useSelector(memberFollowingsRetriever);
 	const [followingsSearchObj, setFollowingsSearchObj] = useState<FollowSearchObj>({ page: 1, limit: 5, mb_id: mb_id });
@@ -47,7 +47,7 @@ export function MemberFollowing(props: any) {
 			.getMemberFollowings(followingsSearchObj)
 			.then((data) => setMemberFollowings(data))
 			.catch((err) => console.log(err));
-	}, [followingsSearchObj, followerRebuild]);
+	}, [followingsSearchObj, followRebuild]);
 
 	// HANDLERS 
 	const unsubscribeHandler = async (e: any, id: string) => {
@@ -59,7 +59,7 @@ export function MemberFollowing(props: any) {
 			await followService.unsubscribe(id);
 
 			await sweetTopSmallSuccessAlert('successfully unsubscribed', 700, false);
-			setFollowerRebuild(!followerRebuild);
+			setFollowerRebuild(!followRebuild);
 		} catch (error: any) {
 			console.log(error);
 			sweetErrorHandling(error).then();
@@ -101,7 +101,7 @@ export function MemberFollowing(props: any) {
               <Button
                 variant="contained"
                 startIcon={
-                  <img src="/icons/follow_icon.svg" style={{ width: "40px", marginLeft: "16px" }} />
+                  <img src="/icons/follow_icon.svg" style={{ width: "40px", marginLeft: "16px" }} alt=""/>
                 }
                 className="follow_cancel_btn"
                 onClick={(e) => unsubscribeHandler(e, following?.follow_id)}

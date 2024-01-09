@@ -82,7 +82,7 @@ export function VisitMyPage(props: any) {
 
   const [value, setValue] = useState("3");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
-  const [followerRebuild, setFollowerRebuild] = useState<Boolean>(false);
+  const [followRebuild, setFollowerRebuild] = useState<Boolean>(false);
   const { chosenMember } = useSelector(chosenMemberRetriever);
   const { chosenMemberBoArticles } = useSelector(chosenMemberBoArticleRetriever);
 	const { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever);
@@ -148,7 +148,7 @@ export function VisitMyPage(props: any) {
             <Stack className="my_page_left">
               <Box display={"flex"} flexDirection={"column"}>
                 <TabPanel value="1">
-                  <Box className="menu_name">Mening Maqolalarim</Box>
+                  <Box className="menu_name">My Articles</Box>
                   <Box className="menu_content">
                     <MemberPosts 
                       chosenMemberBoArticles={chosenMemberBoArticles}
@@ -186,7 +186,7 @@ export function VisitMyPage(props: any) {
                   <Box className={"menu_content"}>
                     <MemberFollowers 
                       actions_enabled={true} 
-                      followerRebuild={followerRebuild}
+                      followerRebuild={followRebuild}
                       setFollowerRebuild={setFollowerRebuild}
                       mb_id={props.verifiedMemberData?._id}
                     />
@@ -198,7 +198,7 @@ export function VisitMyPage(props: any) {
                   <Box className={"menu_content"}>
                     <MemberFollowing 
                       actions_enabled={true} 
-                      followerRebuild={followerRebuild}
+                      followerRebuild={followRebuild}
                       setFollowerRebuild={setFollowerRebuild}
                       mb_id={verifiedMemberData?._id}
                     />
@@ -258,10 +258,10 @@ export function VisitMyPage(props: any) {
                   <YouTubeIcon />
                 </Box>
                 <Box className={"user_media_box"}>
-                  <p className="follows">Followers: 3</p>
-                  <p className="follows">Followings: 2</p>
+                  <p className="follows">Followers: {chosenMember?.mb_subscriber_cnt}</p>
+                  <p className="follows">Followings: {chosenMember?.mb_follow_cnt}</p>
                 </Box>
-                <p className="user_desc">No additional information is included</p>
+                <p className="user_desc">{chosenMember?.mb_description ?? "No additional information is included"}</p>
                 <Box
                   display={"flex"}
                   justifyContent={"flex-end"}
@@ -303,7 +303,7 @@ export function VisitMyPage(props: any) {
                         onClick={() => setValue("1")}
                       >
                         <img src="/icons/post.svg" alt="" />
-                        <span>Maqolalarim</span>
+                        <span>My Articles</span>
                       </div>
                     )}
                   />
