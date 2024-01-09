@@ -24,6 +24,7 @@ import { serverApi } from "../../../lib/config";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { useHistory } from "react-router-dom";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -41,6 +42,7 @@ const memberFollowersRetriever = createSelector(
 
 export function MemberFollowers(props: any) {
   // INITIALIZATIONS 
+  const history = useHistory();
 	const { setFollowerRebuild, mb_id, followerRebuild } = props;
 	const { setMemberFollowers } = actionDispatch(useDispatch());
 	const { memberFollowers } = useSelector(memberFollowersRetriever);
@@ -77,6 +79,11 @@ export function MemberFollowers(props: any) {
 		setFollowersSearchObj({ ...followersSearchObj });
 	};
 
+  const visitMemberHandler = (mb_id: string) => {
+		history.push(`/member-page/other?mb_id=${mb_id}`);
+		document.location.reload();
+	};
+
   return (
     <Stack>
       {memberFollowers.map((follower: Follower) => {
@@ -85,7 +92,11 @@ export function MemberFollowers(props: any) {
           : '/auth/default_user.svg';
         return (
           <Box className={"follow_box"}>
-            <Avatar src={image_url} sx={{ width: 89, height: 89 }} />
+            <Avatar 
+              src={image_url} 
+              sx={{ width: 89, height: 89, cursor: "pointer" }} 
+              onClick={() => visitMemberHandler(follower?.subscriber_id)}
+            />
             <div
               style={{
                 width: "400px",
@@ -95,8 +106,14 @@ export function MemberFollowers(props: any) {
                 height: "85%",
               }}
             >
-              <span className="username_text">{follower?.subscriber_member_data?.mb_type}</span>
-              <span className="name_text">{follower?.subscriber_member_data?.mb_nick}</span>
+              <span className="username_text" >{follower?.subscriber_member_data?.mb_type}</span>
+              <span 
+                className="name_text"
+                style={{ cursor: "pointer" }}
+                onClick={() => visitMemberHandler(follower?.subscriber_id)}
+              >
+                {follower?.subscriber_member_data?.mb_nick}
+              </span>
             </div>
             {props.actions_enabled &&
               (follower?.me_followed && follower.me_followed[0]?.my_following ? (

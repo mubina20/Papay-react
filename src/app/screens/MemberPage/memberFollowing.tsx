@@ -76,61 +76,71 @@ export function MemberFollowing(props: any) {
 		document.location.reload();
 	};
 
-  return (
-    <Stack>
-      {memberFollowings.map((following: Following) => {
-        const image_url = following?.follow_member_data?.mb_image
-          ? `${serverApi}/${following.follow_member_data.mb_image}`
-          : '/auth/default_user.svg';
-        return (
-          <Box className={"follow_box"}>
-            <Avatar src={image_url} sx={{ width: 89, height: 89 }} />
-            <div
-              style={{
-                width: "400px",
-                display: "flex",
-                flexDirection: "column",
-                marginLeft: "25px",
-                height: "85%",
-              }}
-            >
-              <span className="username_text">{following?.follow_member_data?.mb_type}</span>
-              <span className="name_text" >{following?.follow_member_data?.mb_nick}</span>
-            </div>
-            {props.actions_enabled &&(
-              <Button
-                variant="contained"
-                startIcon={
-                  <img src="/icons/follow_icon.svg" style={{ width: "40px", marginLeft: "16px" }} alt=""/>
-                }
-                className="follow_cancel_btn"
-                onClick={(e) => unsubscribeHandler(e, following?.follow_id)}
-              >
-                UNFOLLOW
-              </Button>
-            )}
-          </Box>
-        );
-      })}
-      <Stack sx={{ my: '40px' }} direction="row" alignItems={'center'} justifyContent="center">
-				<Box className="box_bottom">
-					<Pagination
-						count={followingsSearchObj.page >= 3 ? followingsSearchObj.page + 1 : 3}
-						page={followingsSearchObj.page}
-						renderItem={(item) => (
-							<PaginationItem
-								components={{
-									previous: ArrowBackIcon,
-									next: ArrowForwardIcon,
-								}}
-								{...item}
-								color={'secondary'}
-							/>
+	return (
+		<Stack>
+			{memberFollowings.map((following: Following) => {
+				const image_url = following?.follow_member_data?.mb_image
+					? `${serverApi}/${following.follow_member_data.mb_image}`
+					: '/auth/default_user.svg';
+				return (
+					<Box className={"follow_box"}>
+						<Avatar 
+							src={image_url} 
+							sx={{ width: 89, height: 89, cursor: "pointer" }} 
+							onClick={() => visitMemberHandler(following?.follow_id)}
+						/>
+						<div
+							style={{
+								width: "400px",
+								display: "flex",
+								flexDirection: "column",
+								marginLeft: "25px",
+								height: "85%",
+							}}
+						>
+							<span className="username_text">{following?.follow_member_data?.mb_type}</span>
+							<span 
+								className="name_text"
+								style={{ cursor: "pointer" }}
+								onClick={() => visitMemberHandler(following?.follow_id)}
+							>
+								{following?.follow_member_data?.mb_nick}
+							</span>
+						</div>
+						{props.actions_enabled &&(
+						<Button
+							variant="contained"
+							startIcon={
+							<img src="/icons/follow_icon.svg" style={{ width: "40px", marginLeft: "16px" }} alt=""/>
+							}
+							className="follow_cancel_btn"
+							onClick={(e) => unsubscribeHandler(e, following?.follow_id)}
+						>
+							UNFOLLOW
+						</Button>
 						)}
-						onChange={handlePaginationChange}
-					/>
-				</Box>
-			</Stack>
-    </Stack>
-  );
+					</Box>
+				);
+			})}
+			<Stack sx={{ my: '40px' }} direction="row" alignItems={'center'} justifyContent="center">
+					<Box className="box_bottom">
+						<Pagination
+							count={followingsSearchObj.page >= 3 ? followingsSearchObj.page + 1 : 3}
+							page={followingsSearchObj.page}
+							renderItem={(item) => (
+								<PaginationItem
+									components={{
+										previous: ArrowBackIcon,
+										next: ArrowForwardIcon,
+									}}
+									{...item}
+									color={'secondary'}
+								/>
+							)}
+							onChange={handlePaginationChange}
+						/>
+					</Box>
+				</Stack>
+		</Stack>
+	);
 }
