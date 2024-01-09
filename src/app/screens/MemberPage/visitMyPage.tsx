@@ -13,7 +13,6 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-// import TabList from "@mui/lab/TabList";
 import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
@@ -80,7 +79,7 @@ export function VisitMyPage(props: any) {
     setChosenSingleBoArticle,
   } = actionDispatch(useDispatch());
 
-  const [value, setValue] = useState("3");
+  const [value, setValue] = useState("1");
   const [articlesRebuild, setArticlesRebuild] = useState<Date>(new Date());
   const [followRebuild, setFollowerRebuild] = useState<Boolean>(false);
   const { chosenMember } = useSelector(chosenMemberRetriever);
@@ -290,9 +289,12 @@ export function VisitMyPage(props: any) {
 
               <Box className={"my_page_menu"}>
                 <Tabs
-                value={value}
+                  orientation="vertical"
+                  variant="scrollable"
+                  value={value}
                   onChange={handleChange}
                   aria-label="lab API tabs example"
+                  sx={{ borderRight: 1, borderColor: 'divider', width: '350px' }}
                 >
                   <Tab
                     style={{ flexDirection: "column" }}
