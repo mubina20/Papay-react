@@ -15,6 +15,7 @@ import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiServise";
 import { useRef } from "react";
 import { useHistory } from "react-router-dom";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 // REDUX SELECTOR 
 const topRestaurantsRetriever = createSelector(
@@ -39,7 +40,7 @@ export function TopRestaurants() {
 
   const targetLikeTop = async (e: any, id: string) => {
     try{
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifiedMemberData, Definer.auth_err1);
 
       const memberService = new MemberApiService(),
         like_result: any = await memberService.memberLikeTarget({

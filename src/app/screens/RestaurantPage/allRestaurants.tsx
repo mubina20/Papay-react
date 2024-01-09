@@ -33,6 +33,7 @@ import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiServise";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -86,7 +87,7 @@ export function AllRestaurants() {
 
     const targetLikeHandler = async (e: any, id: string) => {
         try {
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
     
             const memberService = new MemberApiService();
             const like_result = await memberService.memberLikeTarget({

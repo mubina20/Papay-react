@@ -63,7 +63,7 @@ export function NavbarOthers(props: any) {
 							setOrderRebuild={props.setOrderRebuild}
                         />
 
-						{!props.verifiedMemberData ? (
+						{!verifiedMemberData ? (
 							<Box>
 								<Button
 									variant="contained"
@@ -76,7 +76,7 @@ export function NavbarOthers(props: any) {
 							) : (
 							<img
 								style={{ width: "48px", height: "48px", borderRadius: "24px" }}
-								src={props.verifiedMemberData.mb_image}
+								src={verifiedMemberData.mb_image}
 								onClick={props.handleLogOutClick}
 								alt=''
 							/>

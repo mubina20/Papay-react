@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../css/App.css";
 import "../css/navbar.css";
 import "../css/footer.css";
@@ -16,8 +16,6 @@ import { NavbarRestaurant } from "./components/header/restaurant";
 import { NavbarOthers } from "./components/header/others";
 import { Footer } from "./components/footer";
 import AuthenticationModal from "./components/auth";
-import { Member } from "../types/user";
-import { serverApi } from "../lib/config";
 import {
   sweetFailureProvider,
   sweetTopSmallSuccessAlert,
@@ -30,9 +28,6 @@ import { Product } from "../types/product";
 
 function App() {
   // INITIALIZATIONS
-  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(
-    null
-  );
   const [path, setPath] = useState();
   const main_path = window.location.pathname;
   const [signUpOpen, setSignUpOpen] = useState(false);
@@ -45,27 +40,10 @@ function App() {
   const current_cart: CartItem[] = JSON.parse(cartJson) ?? [];
   const [cartItems, setCartItems] = useState<CartItem[]>(current_cart);
 
-  useEffect(() => {
-    console.log("=== useEffect: App ===");
-    const memberDataJson: any = localStorage.getItem("member_data")
-      ? localStorage.getItem("member_data")
-      : null;
-    const member_data = memberDataJson ? JSON.parse(memberDataJson) : null;
-    if (member_data) {
-      member_data.mb_image = member_data.mb_image
-        ? `${serverApi}/${member_data.mb_image}`
-        : "/auth/default_user.svg";
-      setVerifiedMemberData(member_data);
-    }
-  }, [signUpOpen, loginOpen]);
-
   // HANDLERS 
   const handleSignUpOpen = () => setSignUpOpen(true);
-
   const handleSignUpClose = () => setSignUpOpen(false);
-
   const handleLoginOpen = () => setLoginOpen(true);
-
   const handleLoginClose = () => setLoginOpen(false);
   const handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -109,6 +87,7 @@ function App() {
       localStorage.setItem("cart_data", JSON.stringify(cart_updated));
     }
   };
+
   const onRemove = (item: CartItem) => {
     const item_data: any = cartItems?.find(
       (ele: CartItem) => ele._id === item._id
@@ -136,6 +115,7 @@ function App() {
     setCartItems(cart_updated);
     localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   };
+  
   const onDeleteAll = () => {
     setCartItems([]);
     localStorage.removeItem("cart_data");
@@ -153,7 +133,6 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
-          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -171,7 +150,6 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
-          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -189,7 +167,6 @@ function App() {
           handleLogOutClick={handleLogOutClick}
           handleCloseLogOut={handleCloseLogOut}
           handleLogOutRequest={handleLogOutRequest}
-          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -210,11 +187,10 @@ function App() {
           <OrdersPage
             orderRebuild={orderRebuild}
             setOrderRebuild={setOrderRebuild}
-            verifiedMemberData={verifiedMemberData}
           />
         </Route>
         <Route path="/member-page">
-          <MemberPage verifiedMemberData={verifiedMemberData}/>
+          <MemberPage />
         </Route>
         <Route path="/help">
           <HelpPage />
@@ -238,10 +214,6 @@ function App() {
       />
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
 
 export default App;

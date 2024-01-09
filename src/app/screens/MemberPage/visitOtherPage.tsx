@@ -43,6 +43,7 @@ import FollowApiService from "../../apiServices/followApiService";
 import { Definer } from "../../../lib/Definer";
 import assert from "assert";
 import { serverApi } from "../../../lib/config";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 // REDUX SLICE
 const actionDispatch = (dispach: Dispatch) => ({
@@ -78,7 +79,7 @@ export function VisitOtherPage(props: any) {
 
   // INITIALIZATIONS
   const history = useHistory();
-  const { verifiedMemberData, chosen_mb_id, chosen_art_id } = props;
+  const { chosen_mb_id, chosen_art_id } = props;
   const { 
     setChosenMember,
     setChosenMemberBoArticles,
@@ -166,7 +167,7 @@ export function VisitOtherPage(props: any) {
   const subscribeHandler = async (e: any) => {
     try {
       e.stopPropagation();
-      assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+      assert.ok(verifiedMemberData, Definer.auth_err1);
 
       const followService = new FollowApiService();
       await followService.subscribe(e.target.value);

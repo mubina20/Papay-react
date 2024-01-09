@@ -95,7 +95,7 @@ export function VisitMyPage(props: any) {
 
   
   useEffect(() => {
-		if (!localStorage.getItem("member_data")) {
+		if (!verifiedMemberData) {
 			sweetFailureProvider('Please login first!', true, true);
 		}
 
@@ -110,7 +110,7 @@ export function VisitMyPage(props: any) {
 			.getChosenMember(verifiedMemberData?._id)
 			.then((data) => setChosenMember(data))
 			.catch((err) => console.log(err));
-  }, [memberArticleSearchObj, articlesRebuild]);
+  }, [memberArticleSearchObj, articlesRebuild, followRebuild]);
   
 
   // HANDLERS
@@ -187,7 +187,7 @@ export function VisitMyPage(props: any) {
                       actions_enabled={true} 
                       followerRebuild={followRebuild}
                       setFollowerRebuild={setFollowerRebuild}
-                      mb_id={props.verifiedMemberData?._id}
+                      mb_id={verifiedMemberData?._id}
                     />
                   </Box>
                 </TabPanel>
