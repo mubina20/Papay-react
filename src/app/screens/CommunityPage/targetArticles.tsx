@@ -40,6 +40,7 @@ export function TargetArticles(props: any) {
         const art_image_url = article.art_image
           ? `${serverApi}/${article.art_image}`.replaceAll('\\','/')
           : "/home/papays.png";
+
         const art_author_image = article.member_data.mb_image
           ? `${serverApi}/${article.member_data.mb_image}`.replaceAll('\\','/')
           : "/auth/default_user.svg";
