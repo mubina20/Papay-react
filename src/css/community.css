@@ -100,6 +100,8 @@
     border-radius: 50%;
     background: linear-gradient(180deg, #55a99d 0%, #007665 100%);
     border: none;
+    cursor: pointer;
+    padding-left: 10px;
 }
 
 .community_page .chat_main .msg_left {
