@@ -1,5 +1,8 @@
 export const Definer = {
-	input_err1: 'att: Please fulfil all inputs!',
 	general_err1: 'att: Something went wrong!',
-	auth_err1: "att: Pleace login first!"
+
+	auth_err1: "att: Pleace login first!",
+
+	input_err1: 'att: Please fulfil all inputs!',
+	input_err2: "att: Please insert JPG, JPEG, PNG formats only!"
 };

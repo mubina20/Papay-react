@@ -62,7 +62,7 @@ export function MemberPosts(props: any) {
                                 <img 
                                     src={
                                         article?.member_data?.mb_image
-                                        ? `${serverApi}/${article.member_data.mb_image}`
+                                        ? `${serverApi}/${article.member_data.mb_image}`.replaceAll('\\','/')
                                         : "/auth/default_user.svg"
                                     }
                                     alt=""

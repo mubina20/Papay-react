@@ -74,7 +74,7 @@ class CommunityApiService {
       console.log("IMAGE :::", image);
 
       const result = await axios(`${this.path}/community/image`, {
-        method: "POST",
+        method: "GET",
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
